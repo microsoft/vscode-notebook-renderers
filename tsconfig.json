@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2018",
+        "outDir": "out",
+        "lib": [
+            "es6",
+            "es2018",
+            "dom",
+            "ES2019"
+        ],
+        "sourceMap": true,
+        "rootDir": "src",
+        "strict": true,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "exclude": [
+        "node_modules",
+        ".vscode-test"
+    ]
+}
