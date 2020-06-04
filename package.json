@@ -1,0 +1,69 @@
+{
+    "name": "vscode-notebook-renderers",
+    "displayName": "Notebook Renderers",
+    "description": "Renderers for Notebooks",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.45.0"
+    },
+    "publisher": "ms-python",
+    "enableProposedApi": false,
+    "author": {
+        "name": "Microsoft Corporation"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/Microsoft/vscode-notebook-renderers",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Microsoft/vscode-notebook-renderers"
+    },
+    "bugs": {
+        "url": "https://github.com/Microsoft/vscode-notebook-renderers/issues"
+    },
+    "qna": "https://stackoverflow.com/questions/tagged/visual-studio-code+jupyter",
+    "icon": "icon.png",
+    "galleryBanner": {
+        "color": "#1e415e",
+        "theme": "dark"
+    },
+    "keywords": [
+        "python",
+        "jupyter",
+        "notebook",
+        "multi-root ready"
+    ],
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {},
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "eslint src --ext ts",
+        "watch": "tsc -watch -p ./",
+        "npx ": "vsce package -o ms-notebook-renderers.vsix",
+        "test": "node ./out/test/runTest.js",
+        "prettier-fix": "prettier 'src/**/*.ts*' --write"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^7.0.2",
+        "@types/node": "^12.11.7",
+        "@types/vscode": "^1.45.0",
+        "@typescript-eslint/eslint-plugin": "^3.1.0",
+        "@typescript-eslint/parser": "^3.1.0",
+        "eslint": "^7.1.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-prettier": "^3.1.3",
+        "glob": "^7.1.6",
+        "mocha": "^7.2.0",
+        "prettier": "^2.0.5",
+        "typescript": "^3.9.3",
+        "vscode-test": "^1.4.0",
+        "webpack": "^4.43.0"
+    }
+}
