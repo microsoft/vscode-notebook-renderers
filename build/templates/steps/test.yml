@@ -5,3 +5,6 @@ steps:
 
   - bash: npm run compile
     displayName: 'Compile'
+
+  - bash: npm run test
+    displayName: 'Test'

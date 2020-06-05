@@ -1,8 +1,3 @@
-parameters:
-  workingDirectory: ''
-  compile: 'true'
-  installVSCEorNPX: 'true'
-
 steps:
   - bash: |
       printenv
@@ -34,21 +29,14 @@ steps:
   - task: Npm@1
     displayName: 'npm ci'
     inputs:
-      workingDir: ${{ parameters.workingDirectory }}
+      workingDir: $(Build.SourcesDirectory)
       command: custom
       verbose: true
       customCommand: ci
 
-  # Install vsce
   - bash: |
       npm install -g vsce
     displayName: 'Install vsce'
-    condition: and(succeeded(), eq('${{ parameters.installVSCEorNPX }}', 'true'))
-
-  - bash: npx tsc -p ./
-    displayName: 'compile (npx tsc -p ./)'
-    workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.compile }}', 'true'))
 
   # https://code.visualstudio.com/api/working-with-extensions/continuous-integration#azure-pipelines
   - bash: |
