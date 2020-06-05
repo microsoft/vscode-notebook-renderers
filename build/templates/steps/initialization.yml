@@ -1,0 +1,59 @@
+parameters:
+  workingDirectory: ''
+  compile: 'true'
+  installVSCEorNPX: 'true'
+
+steps:
+  - bash: |
+      printenv
+    displayName: 'Show all env vars'
+    condition: eq(variables['system.debug'], 'true')
+
+  - task: NodeTool@0
+    displayName: 'Use Node $(NodeVersion)'
+    inputs:
+      versionSpec: $(NodeVersion)
+
+  - task: Npm@1
+    displayName: 'Use NPM $(NpmVersion)'
+    inputs:
+      command: custom
+      verbose: true
+      customCommand: 'install -g npm@$(NpmVersion)'
+
+  # See the help here on how to cache npm
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/caching/?view=azure-devops#nodejsnpm
+  - task: CacheBeta@0
+    inputs:
+      key: npm | $(Agent.OS) | package-lock.json
+      path: $(npm_config_cache)
+      restoreKeys: |
+        npm | $(Agent.OS)
+      displayName: Cache npm
+
+  - task: Npm@1
+    displayName: 'npm ci'
+    inputs:
+      workingDir: ${{ parameters.workingDirectory }}
+      command: custom
+      verbose: true
+      customCommand: ci
+
+  # Install vsce
+  - bash: |
+      npm install -g vsce
+    displayName: 'Install vsce'
+    condition: and(succeeded(), eq('${{ parameters.installVSCEorNPX }}', 'true'))
+
+  - bash: npx tsc -p ./
+    displayName: 'compile (npx tsc -p ./)'
+    workingDirectory: ${{ parameters.workingDirectory }}
+    condition: and(succeeded(), eq('${{ parameters.compile }}', 'true'))
+
+  # https://code.visualstudio.com/api/working-with-extensions/continuous-integration#azure-pipelines
+  - bash: |
+      set -e
+      /usr/bin/Xvfb :10 -ac >> /tmp/Xvfb.out 2>&1 &
+      disown -ar
+    displayName: 'Start Display Server (xvfb) to launch VS Code)'
+    condition: and(succeeded(), eq(variables['Agent.Os'], 'Linux'))

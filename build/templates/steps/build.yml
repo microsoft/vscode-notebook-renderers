@@ -1,0 +1,38 @@
+# -----------------------------------------------------------------------------------------------------------------------------
+# Overview:
+# -----------------------------------------------------------------------------------------------------------------------------
+# Set of steps used to compile and build the extension
+#
+# -----------------------------------------------------------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------------------------------------------------------
+# 1. build
+#   Mandatory
+#   Possible values, `true` or `false`.
+#   If `true`, means we need to build the VSIX, else just compile.
+
+steps:
+  - template: initialization.yml
+    parameters:
+      PythonVersion: $(PythonVersion)
+      workingDirectory: $(Build.SourcesDirectory)
+      compile: 'false'
+
+#   - bash: npm run clean
+#     displayName: 'Clean'
+
+  - bash: |
+      npm run package
+    displayName: 'Build VSIX'
+
+  - task: CopyFiles@2
+    inputs:
+      contents: '*.vsix'
+      targetFolder: $(Build.ArtifactStagingDirectory)
+    displayName: 'Copy VSIX'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: VSIX
+    displayName: 'Publish VSIX to Artifacts'
