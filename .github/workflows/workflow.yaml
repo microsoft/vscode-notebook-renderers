@@ -8,8 +8,6 @@ on:
     paths-ignore: # dont run when changes made to these folders
       - '.vscode/**'
   pull_request:
-    branches:
-      - *
 
 env:
   CACHE_NPM_DEPS: cache-npm
