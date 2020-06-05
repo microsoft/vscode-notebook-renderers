@@ -44,6 +44,7 @@
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
         "lint": "eslint src --ext ts",
+        "lint-format": "npx prettier 'src/**/*.ts*' --check",
         "watch": "tsc -watch -p ./",
         "package": "vsce package -o ms-notebook-renderers.vsix",
         "test": "node ./out/test/runTest.js",

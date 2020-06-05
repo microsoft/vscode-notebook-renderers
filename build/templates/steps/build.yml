@@ -1,25 +1,5 @@
-# -----------------------------------------------------------------------------------------------------------------------------
-# Overview:
-# -----------------------------------------------------------------------------------------------------------------------------
-# Set of steps used to compile and build the extension
-#
-# -----------------------------------------------------------------------------------------------------------------------------
-# Variables
-# -----------------------------------------------------------------------------------------------------------------------------
-# 1. build
-#   Mandatory
-#   Possible values, `true` or `false`.
-#   If `true`, means we need to build the VSIX, else just compile.
-
 steps:
   - template: initialization.yml
-    parameters:
-      PythonVersion: $(PythonVersion)
-      workingDirectory: $(Build.SourcesDirectory)
-      compile: 'false'
-
-#   - bash: npm run clean
-#     displayName: 'Clean'
 
   - bash: |
       npm run package

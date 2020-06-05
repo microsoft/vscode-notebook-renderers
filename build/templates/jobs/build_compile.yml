@@ -14,6 +14,12 @@ jobs:
     steps:
       - template: ../steps/build.yml
 
+  - job: Test
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - template: ../steps/test.yml
+
   - job: Dependencies
     pool:
       vmImage: 'ubuntu-16.04'
@@ -34,10 +40,6 @@ jobs:
         displayName: 'Lint'
         workingDirectory: $(Build.SourcesDirectory)
 
-      - bash: npx prettier 'src/**/*.ts*' --check
-        displayName: 'Code Format (TypeScript)'
-        workingDirectory: $(Build.SourcesDirectory)
-
-      - bash: npx prettier "build/**/*.js" --check
-        displayName: 'Code Format (JavaScript)'
+      - bash: npm run lint-format
+        displayName: 'Code Format (TypeScript & JavaScript)'
         workingDirectory: $(Build.SourcesDirectory)

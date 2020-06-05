@@ -7,10 +7,6 @@
 
 steps:
   - template: initialization.yml
-    parameters:
-      PythonVersion: $(PythonVersion)
-      workingDirectory: $(Build.SourcesDirectory)
-      compile: 'false'
 
 #   - bash: npm run clean
 #     displayName: 'Clean'
