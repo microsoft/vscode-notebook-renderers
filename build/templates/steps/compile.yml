@@ -1,0 +1,18 @@
+# Compiles the source
+
+steps:
+  - template: initialization.yml
+    parameters:
+      workingDirectory: $(Build.SourcesDirectory)
+      compile: 'true'
+      installVSCEorNPX: 'true'
+
+#   - task: Gulp@0
+#     displayName: 'Validate package.json'
+#     inputs:
+#       targets: 'validate-packagejson'
+
+#   - task: Gulp@0
+#     displayName: 'Compile and check for errors'
+#     inputs:
+#       targets: 'prePublishNonBundle'
