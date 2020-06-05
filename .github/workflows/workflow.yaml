@@ -8,9 +8,6 @@ on:
     paths-ignore: # dont run when changes made to these folders
       - '.vscode/**'
   pull_request:
-    branches:
-      - release
-      - master
 
 env:
   CACHE_NPM_DEPS: cache-npm
@@ -94,5 +91,5 @@ jobs:
 
       - uses: actions/upload-artifact@v1
         with:
-          name: ${{env.ARTIFACT_NAME_VSIX}}
+          name: ms-notebook-renderers.vsix
           path: ms-notebook-renderers.vsix
