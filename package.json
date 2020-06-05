@@ -45,7 +45,7 @@
         "compile": "tsc -p ./",
         "lint": "eslint src --ext ts",
         "watch": "tsc -watch -p ./",
-        "npx ": "vsce package -o ms-notebook-renderers.vsix",
+        "package": "vsce package -o ms-notebook-renderers.vsix",
         "test": "node ./out/test/runTest.js",
         "prettier-fix": "prettier 'src/**/*.ts*' --write"
     },
