@@ -9,8 +9,7 @@ on:
       - '.vscode/**'
   pull_request:
     branches:
-      - release
-      - master
+      - *
 
 env:
   CACHE_NPM_DEPS: cache-npm
