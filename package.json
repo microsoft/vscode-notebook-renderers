@@ -92,12 +92,6 @@
         "@nteract/transform-plotly": "^6.0.0",
         "@nteract/transform-vega": "^6.0.3",
         "@nteract/transforms": "^4.4.4",
-        "lodash": "^4.17.15",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "uuid": "^8.1.0"
-    },
-    "devDependencies": {
         "@jupyter-widgets/base": "^2.0.1",
         "@jupyter-widgets/controls": "^1.5.2",
         "@jupyter-widgets/jupyterlab-manager": "^1.0.2",
@@ -105,6 +99,13 @@
         "@jupyterlab/coreutils": "^3.1.0",
         "@loadable/component": "^5.12.0",
         "@phosphor/widgets": "^1.9.3",
+        "canvas": "^2.6.1",
+        "lodash": "^4.17.15",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "uuid": "^8.1.0"
+    },
+    "devDependencies": {
         "@types/glob": "^7.1.1",
         "@types/loadable__component": "^5.10.0",
         "@types/lodash": "^4.14.155",
@@ -117,7 +118,6 @@
         "@typescript-eslint/eslint-plugin": "^3.1.0",
         "@typescript-eslint/parser": "^3.1.0",
         "cache-loader": "^4.1.0",
-        "canvas": "^2.6.1",
         "concurrently": "^5.2.0",
         "copy-webpack-plugin": "^6.0.2",
         "css-loader": "^3.5.3",
