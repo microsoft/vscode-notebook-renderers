@@ -100,8 +100,8 @@
         "@nteract/transforms": "^4.4.4",
         "@phosphor/widgets": "^1.9.3",
         "lodash": "^4.17.15",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2",
         "uuid": "^3.3.2"
     },
     "devDependencies": {
