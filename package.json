@@ -74,7 +74,7 @@
         "compile:extension:watch": "tsc -p src/extension --watch",
         "compile:test": "tsc -p src/test",
         "compile:test:watch": "tsc -p src/test --watch",
-        "compile:webpack": "npm run build:client && npm run build:extenison",
+        "compile:webpack": "npm run build:client && npm run build:extension",
         "compile:client": "webpack --config=build/webpack/webpack.client.config.js",
         "build:client": "webpack --config=build/webpack/webpack.client.config.js --mode=production",
         "build:extension": "webpack --config=build/webpack/webpack.extension.config.js --mode=production",
