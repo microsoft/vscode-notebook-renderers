@@ -1,12 +1,12 @@
 {
-    "name": "vscode-notebook-renderers",
+    "name": "notebook-renderers",
     "displayName": "Notebook Renderers",
     "description": "Renderers for Notebooks",
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.45.0"
     },
-    "publisher": "ms-python",
+    "publisher": "ms-ai-tools",
     "enableProposedApi": false,
     "author": {
         "name": "Microsoft Corporation"
