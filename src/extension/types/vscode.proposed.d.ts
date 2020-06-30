@@ -344,7 +344,6 @@ declare module 'vscode' {
     export interface ResourceLabelFormatting {
         label: string; // myLabel:/${path}
         // TODO@isidorn
-        // eslint-disable-next-line vscode-dts-literal-or-types
         separator: '/' | '\\' | '';
         tildify?: boolean;
         normalizeDriveLetter?: boolean;
