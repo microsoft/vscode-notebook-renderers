@@ -16,8 +16,7 @@ export function activate(context: ExtensionContext): void {
         notebook.registerNotebookOutputRenderer(
             'jupyter-notebook-renderer',
             {
-                type: 'display_data',
-                subTypes: [
+                mimeTypes: [
                     'application/geo+json',
                     'application/vdom.v1+json',
                     'application/vnd.dataresource+json',
