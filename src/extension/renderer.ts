@@ -22,7 +22,7 @@ export class NotebookOutputRenderer implements VSCNotebookOutputRenderer {
         if (request.output.outputKind === CellOutputKind.Rich && request.mimeType in request.output.data) {
             outputToSend = {
                 ...request.output,
-                // Send only what we need & ignore other mimetypes.
+                // Send only what we need & ignore other mimeTypes.
                 data: {
                     [request.mimeType]: request.output.data[request.mimeType]
                 }
