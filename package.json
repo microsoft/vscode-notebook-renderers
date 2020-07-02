@@ -4,7 +4,7 @@
     "description": "Renderers for Notebooks",
     "version": "0.0.1",
     "engines": {
-        "vscode": "^1.45.0"
+        "vscode": "^1.46.0"
     },
     "publisher": "ms-ai-tools",
     "enableProposedApi": true,
@@ -20,6 +20,7 @@
     "bugs": {
         "url": "https://github.com/Microsoft/vscode-notebook-renderers/issues"
     },
+    "preview": true,
     "qna": "https://stackoverflow.com/questions/tagged/visual-studio-code+jupyter",
     "icon": "icon.png",
     "galleryBanner": {
@@ -33,12 +34,14 @@
         "multi-root ready"
     ],
     "categories": [
-        "Other"
+        "Other",
+        "Data Science",
+        "Machine Learning",
+        "Notebooks",
+        "Visualization"
     ],
     "activationEvents": [
-        "*",
-        "onLanguage:python",
-        "onLanguage:jupyter"
+        "*"
     ],
     "main": "./out/extension/index.js",
     "contributes": {
@@ -69,6 +72,7 @@
     },
     "scripts": {
         "vscode:prepublish": "npm run compile:webpack",
+        "dev": "concurrently -r npm:compile:extension:watch npm:compile:client:watch npm:compile:test:watch",
         "compile": "npm run compile:extension && npm run compile:test && npm run compile:client",
         "compile:extension": "tsc -p src/extension",
         "compile:extension:watch": "tsc -p src/extension --watch",

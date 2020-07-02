@@ -4,12 +4,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
-            "dependsOn": [
-                "compile:extension:watch",
-                "compile:test:watch",
-                "compile:client:watch"
+            "type": "npm",
+            "label": "Build (dev)",
+            "script": "dev",
+            "isBackground": true,
+            "problemMatcher": [
+                "$tsc-watch",
+                "$ts-checker-webpack-watch"
             ],
+            "presentation": {
+                "reveal": "never"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -17,33 +22,12 @@
         },
         {
             "type": "npm",
-            "script": "compile:extension:watch",
-            "label": "compile:extension:watch",
-            "problemMatcher": "$tsc-watch",
-            "isBackground": true,
-            "presentation": {
-                "reveal": "never"
-            },
-        },
-        {
-            "type": "npm",
-            "script": "compile:test:watch",
-            "label": "compile:test:watch",
-            "problemMatcher": "$tsc-watch",
-            "isBackground": true,
-            "presentation": {
-                "reveal": "never"
-            },
-        },
-        {
-            "type": "npm",
-            "script": "compile:client:watch",
-            "label": "compile:client:watch",
-            "problemMatcher": "$tsc-watch",
-            "isBackground": true,
-            "presentation": {
-                "reveal": "never"
-            },
+            "label": "Build (release)",
+            "script": "vscode:prepublish",
+            "problemMatcher": [
+                "$ts-checker-webpack"
+            ],
+            "group": "build"
         }
     ]
 }
