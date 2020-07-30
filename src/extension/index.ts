@@ -1,17 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { ExtensionContext, notebook, commands, window } from 'vscode';
+import { ExtensionContext, notebook } from 'vscode';
 import { NotebookOutputRenderer } from './renderer';
 
 export function activate(context: ExtensionContext): void {
-    console.log('Congratulations, your extension "vscode-notebook-renderers" is now active!');
-
-    const disposable = commands.registerCommand('extension.helloWorld', () => {
-        window.showInformationMessage('Hello World!');
-    });
-
-    context.subscriptions.push(disposable);
     context.subscriptions.push(
         notebook.registerNotebookOutputRenderer(
             'jupyter-notebook-renderer',
@@ -31,15 +24,13 @@ export function activate(context: ExtensionContext): void {
                     'application/vnd.vegalite.v4+json',
                     'application/x-nteract-model-debug+json',
                     'image/gif',
+                    'image/png',
+                    'image/jpeg',
                     'text/latex',
                     'text/vnd.plotly.v1+html'
                 ]
             },
-            new NotebookOutputRenderer()
+            new NotebookOutputRenderer(context)
         )
     );
-}
-
-export function deactivate(): void {
-    // Noop.
 }

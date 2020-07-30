@@ -1,47 +1,64 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+'use strict';
+
 // This must be on top, do not change. Required by webpack.
-// eslint-disable-next-line no-unused-vars
 declare let __webpack_public_path__: string;
 const getPublicPath = () => {
     const currentDirname = (document.currentScript as HTMLScriptElement).src.replace(/[^/]+$/, '');
     return new URL(currentDirname).toString();
 };
 
-// eslint-disable-next-line prefer-const
 __webpack_public_path__ = getPublicPath();
 // This must be on top, do not change. Required by webpack.
 
-import { nbformat } from '@jupyterlab/coreutils';
+import type { nbformat } from '@jupyterlab/coreutils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { JupyterNotebookRenderer, renderCallback } from './constants';
 import { CellOutput } from './render';
 
+const notebookApi = acquireNotebookRendererApi(JupyterNotebookRenderer);
+
+notebookApi.onDidCreateOutput(({ element, outputId }) => renderOutput(element.querySelector('script')!, outputId));
+notebookApi.onWillDestroyOutput((e) => {
+    if (e?.outputId && outputById.has(e?.outputId)) {
+        outputById.get(e.outputId)?.dispose(); //NOSONAR
+        outputById.delete(e.outputId);
+    }
+});
+
+const outputById = new Map<string, { dispose(): void }>();
 /**
  * Called from renderer to render output.
  * This will be exposed as a public method on window for renderer to render output.
  */
-function renderOutput(tag: HTMLScriptElement) {
-    let container: HTMLElement;
+function renderOutput(tag: HTMLScriptElement, outputId?: string) {
     const mimeType = tag.dataset.mimeType as string;
     try {
+        let container: HTMLElement;
+        outputId = outputId || tag.dataset.outputId!;
+        // tslint:disable-next-line: no-console
+        console.trace(`JupyterNotebookRenderer: Rendering mimeType ${mimeType}`);
         const output = JSON.parse(tag.innerHTML) as nbformat.IExecuteResult | nbformat.IDisplayData;
-        console.log(`Rendering mimeType ${mimeType}`);
 
         // Create an element to render in, or reuse a previous element.
-        if (tag.nextElementSibling instanceof HTMLDivElement) {
-            container = tag.nextElementSibling;
+        const maybeOldContainer = tag.previousElementSibling;
+        if (maybeOldContainer instanceof HTMLDivElement && maybeOldContainer.dataset.renderer) {
+            container = maybeOldContainer;
+            // tslint:disable-next-line: no-inner-html
             container.innerHTML = '';
         } else {
             container = document.createElement('div');
-            tag.parentNode?.insertBefore(container, tag.nextSibling); // NOSONAR
+            tag.parentNode?.insertBefore(container, tag.nextSibling);
         }
-        tag.parentElement?.removeChild(tag); // NOSONAR
 
+        outputById.set(outputId, { dispose: () => ReactDOM.unmountComponentAtNode(container) });
         ReactDOM.render(React.createElement(CellOutput, { mimeType, output }, null), container);
     } catch (ex) {
-        console.error(`Failed to render mime type ${mimeType}`, ex);
+        // tslint:disable-next-line: no-console
+        console.error(`JupyterNotebookRenderer: Failed to render mime type ${mimeType}`, ex);
     }
 }
 
@@ -50,19 +67,13 @@ function renderOutput(tag: HTMLScriptElement) {
  * At this point look through all such scripts and render the output.
  */
 function renderOnLoad() {
-    document
-        .querySelectorAll<HTMLScriptElement>('script[type="application/vscode-jupyter+json"]')
-        .forEach(renderOutput);
+    const nodeList = document.querySelectorAll(`script[data-renderer="${JupyterNotebookRenderer}"]`);
+    for (let i = 0; i < nodeList.length; i++) {
+        renderOutput(nodeList[i] as HTMLScriptElement);
+    }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function initialize(global: Record<string, any>) {
-    // Expose necessary hooks for client renderer to render output.
-    Object.assign(global, { 'vscode-jupyter': { renderOutput } });
-    // Possible this (pre-render script loaded after notebook attempted to render something).
-    // At this point we need to go and render the existing output.
-    renderOnLoad();
-}
-
-console.log('Pre-Render scripts loaded');
-initialize(window);
+// tslint:disable-next-line: no-console
+console.trace('JupyterNotebookRenderer: Pre-Render scripts loaded');
+Object.assign(window, { [renderCallback]: renderOutput });
+renderOnLoad();

@@ -4,7 +4,7 @@
     "description": "Renderers for Notebooks",
     "version": "0.0.1",
     "engines": {
-        "vscode": "^1.46.0"
+        "vscode": "^1.47.0"
     },
     "publisher": "ms-ai-tools",
     "enableProposedApi": true,
@@ -64,6 +64,8 @@
                     "application/vnd.vegalite.v4+json",
                     "application/x-nteract-model-debug+json",
                     "image/gif",
+                    "image/png",
+                    "image/jpeg",
                     "text/latex",
                     "text/vnd.plotly.v1+html"
                 ]
@@ -119,7 +121,7 @@
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.8",
         "@types/uuid": "^8.0.0",
-        "@types/vscode": "^1.45.0",
+        "@types/vscode": "^1.47.0",
         "@typescript-eslint/eslint-plugin": "^3.1.0",
         "@typescript-eslint/parser": "^3.1.0",
         "cache-loader": "^4.1.0",
