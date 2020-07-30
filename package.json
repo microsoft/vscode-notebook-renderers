@@ -105,7 +105,7 @@
         "@nteract/transform-vega": "^6.0.3",
         "@nteract/transforms": "^4.4.4",
         "@phosphor/widgets": "^1.9.3",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
         "uuid": "^3.3.2"
@@ -113,7 +113,7 @@
     "devDependencies": {
         "@types/glob": "^7.1.1",
         "@types/loadable__component": "^5.10.0",
-        "@types/lodash": "^4.14.155",
+        "@types/lodash": "^4.14.158",
         "@types/mocha": "^7.0.2",
         "@types/node": "^12.11.7",
         "@types/react": "^16.9.35",
