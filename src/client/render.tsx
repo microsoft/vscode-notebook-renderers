@@ -44,7 +44,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
      * Custom rendering of image/png and image/jpeg to handle custom Jupyter metadata.
      * Behavior adopted from Jupyter lab.
      */
-    private renderImage(mimeBundle: nbformat.IMimeBundle, metadata: Record<string, any> = {}) {
+    private renderImage(mimeBundle: nbformat.IMimeBundle, metadata: Record<string, unknown> = {}) {
         const mimeType = 'image/png' in mimeBundle ? 'image/png' : 'image/jpeg';
 
         const imgStyle: Record<string, string | number> = {};
@@ -54,6 +54,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         if (typeof metadata.needs_background === 'string') {
             divStyle.backgroundColor = metadata.needs_background === 'light' ? 'white' : 'black';
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const imageMetadata = metadata[mimeType] as Record<string, any> | undefined;
         if (imageMetadata) {
             if (imageMetadata.height) {
@@ -77,6 +78,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         );
     }
     private renderOutput(data: nbformat.MultilineString | JSONObject, mimeType?: string) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars
         const Transform = getTransform(this.props.mimeType!);
         const divStyle: React.CSSProperties = {
             backgroundColor: mimeType && isAltairPlot(mimeType) ? 'white' : undefined

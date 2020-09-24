@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// tslint:disable-next-line:no-require-imports no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const _escapeRegExp = require('lodash/escapeRegExp') as typeof import('lodash/escapeRegExp');
 
-export function fixMarkdown(input: string, wrapSingles: boolean = false): string {
+export function fixMarkdown(input: string, wrapSingles = false): string {
     const latexFixed = fixLatex(input, wrapSingles);
 
     try {
@@ -23,7 +23,7 @@ export function fixMarkdown(input: string, wrapSingles: boolean = false): string
 //
 // LaTeX seems to follow the pattern of \begin{name} or is escaped with $$ or $. See here for a bunch of examples:
 // https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Typesetting%20Equations.html
-export function fixLatex(input: string, wrapSingles: boolean = false): string {
+export function fixLatex(input: string, wrapSingles = false): string {
     const output: string[] = [];
 
     // change latex
@@ -35,7 +35,7 @@ export function fixLatex(input: string, wrapSingles: boolean = false): string {
         // Check $$, $ and begin
         const dollars = /\$\$/.exec(input.substr(start));
         const dollar = /\$/.exec(input.substr(start));
-        const begin = /\\begin\{([a-z,\*]+)\}/.exec(input.substr(start));
+        const begin = /\\begin\{([a-z,*]+)\}/.exec(input.substr(start));
         let endRegex = /\$\$/;
         let endRegexLength = 2;
 
