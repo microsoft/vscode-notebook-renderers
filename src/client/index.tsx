@@ -5,64 +5,65 @@
 // eslint-disable-next-line no-unused-vars
 declare let __webpack_public_path__: string;
 const getPublicPath = () => {
-    const currentDirname = (document.currentScript as HTMLScriptElement).src.replace(/[^/]+$/, '');
-    return new URL(currentDirname).toString();
+  const currentDirname = (document.currentScript as HTMLScriptElement).src.replace(/[^/]+$/, '');
+  return new URL(currentDirname).toString();
 };
 
-// eslint-disable-next-line prefer-const
 __webpack_public_path__ = getPublicPath();
 // This must be on top, do not change. Required by webpack.
 
 import { nbformat } from '@jupyterlab/coreutils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { NotebookOutputEventParams } from 'vscode-notebook-renderer';
+import { JupyterNotebookRenderer } from './constants';
 import { CellOutput } from './render';
+
+const notebookApi = acquireNotebookRendererApi(JupyterNotebookRenderer);
+
+notebookApi.onDidCreateOutput(renderOutput);
 
 /**
  * Called from renderer to render output.
  * This will be exposed as a public method on window for renderer to render output.
  */
-function renderOutput(tag: HTMLScriptElement) {
-    let container: HTMLElement;
-    const mimeType = tag.dataset.mimeType as string;
+function renderOutput(request: NotebookOutputEventParams) {
     try {
-        const output = JSON.parse(tag.innerHTML) as nbformat.IExecuteResult | nbformat.IDisplayData;
-        console.log(`Rendering mimeType ${mimeType}`);
+        console.error('request', request);
+        const output = convertVSCodeOutputToExecutResultOrDisplayData(request);
+        console.log(`Rendering mimeType ${request.mimeType}`, output);
+        console.error('request output', output);
 
-        // Create an element to render in, or reuse a previous element.
-        if (tag.nextElementSibling instanceof HTMLDivElement) {
-            container = tag.nextElementSibling;
-            container.innerHTML = '';
-        } else {
-            container = document.createElement('div');
-            tag.parentNode?.insertBefore(container, tag.nextSibling); // NOSONAR
-        }
-        tag.parentElement?.removeChild(tag); // NOSONAR
-
-        ReactDOM.render(React.createElement(CellOutput, { mimeType, output }, null), container);
+        ReactDOM.render(React.createElement(CellOutput, { mimeType: request.mimeType, output }, null), request.element);
     } catch (ex) {
-        console.error(`Failed to render mime type ${mimeType}`, ex);
+        console.error(`Failed to render mime type ${request.mimeType}`, ex);
     }
 }
 
-/**
- * Possible the pre-render scripts load late, after we have attempted to render output from notebook.
- * At this point look through all such scripts and render the output.
- */
-function renderOnLoad() {
-    document
-        .querySelectorAll<HTMLScriptElement>('script[type="application/vscode-jupyter+json"]')
-        .forEach(renderOutput);
-}
+function convertVSCodeOutputToExecutResultOrDisplayData(
+    request: NotebookOutputEventParams
+): nbformat.IExecuteResult | nbformat.IDisplayData {
+    const metadata: Record<string, any> = {};
+    // Send metadata only for the mimeType we are interested in.
+    const customMetadata = request.output.metadata?.custom;
+    if (customMetadata) {
+        if (customMetadata[request.mimeType]) {
+            metadata[request.mimeType] = customMetadata[request.mimeType];
+        }
+        if (customMetadata.needs_background) {
+            metadata.needs_background = customMetadata.needs_background;
+        }
+        if (customMetadata.unconfined) {
+            metadata.unconfined = customMetadata.unconfined;
+        }
+    }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function initialize(global: Record<string, any>) {
-    // Expose necessary hooks for client renderer to render output.
-    Object.assign(global, { 'vscode-jupyter': { renderOutput } });
-    // Possible this (pre-render script loaded after notebook attempted to render something).
-    // At this point we need to go and render the existing output.
-    renderOnLoad();
+    return {
+        data: {
+            [request.mimeType]: request.output.data[request.mimeType]
+        },
+        metadata,
+        execution_count: null,
+        output_type: request.output.metadata?.custom?.vscode?.outputType || 'execute_result'
+    };
 }
-
-console.log('Pre-Render scripts loaded');
-initialize(window);
