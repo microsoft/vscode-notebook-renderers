@@ -4,7 +4,7 @@
 import type { nbformat } from '@jupyterlab/coreutils';
 import type { JSONObject } from '@phosphor/coreutils';
 import * as React from 'react';
-import { concatMultilineStringInput, concatMultilineStringOutput } from './helpers';
+import { concatMultilineStringOutput } from './helpers';
 import { fixLatexEquations } from './latexManipulation';
 import { fixMarkdown } from './markdownManipulation';
 import { getTransform } from './transforms';
@@ -39,19 +39,11 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             default:
                 return this.renderOutput(data, this.props.mimeType);
         }
-        // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars
-        // const Transform = getTransform(this.props.mimeType!);
-        // return (
-        //     <div>
-        //         <Transform data={data} />
-        //     </div>
-        // );
     }
     /**
      * Custom rendering of image/png and image/jpeg to handle custom Jupyter metadata.
      * Behavior adopted from Jupyter lab.
      */
-    // tslint:disable-next-line: no-any
     private renderImage(mimeBundle: nbformat.IMimeBundle, metadata: Record<string, any> = {}) {
         const mimeType = 'image/png' in mimeBundle ? 'image/png' : 'image/jpeg';
 
@@ -62,7 +54,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         if (typeof metadata.needs_background === 'string') {
             divStyle.backgroundColor = metadata.needs_background === 'light' ? 'white' : 'black';
         }
-        // tslint:disable-next-line: no-any
         const imageMetadata = metadata[mimeType] as Record<string, any> | undefined;
         if (imageMetadata) {
             if (imageMetadata.height) {
@@ -79,7 +70,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         // Hack, use same classes as used in VSCode for images (keep things as similar as possible).
         // This is to maintain consistently in displaying images (if we hadn't used HTML).
         // See src/vs/workbench/contrib/notebook/browser/view/output/transforms/richTransform.ts
-        // tslint:disable: react-a11y-img-has-alt
         return (
             <div className={'display'} style={divStyle}>
                 <img src={imgSrc} style={imgStyle}></img>
