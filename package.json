@@ -6,7 +6,7 @@
     "engines": {
         "vscode": "^1.49.0"
     },
-    "publisher": "ms-ai-tools",
+    "publisher": "ms-toolsai",
     "enableProposedApi": true,
     "author": {
         "name": "Microsoft Corporation"
