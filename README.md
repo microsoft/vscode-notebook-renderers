@@ -1,7 +1,7 @@
 # Notebook Renderers for Visual Studio Code
 
-This extension provides....
-Place an image of Ploty/vega
+A [Visual Studio Code](https://code.visualstudio.com/) [extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) that provides renderers for outputs of [Jupyter Notebooks](https://jupyter.org/).
+For [Jupyter Notebooks](https://jupyter.org/) support please install [Jupyter extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
 
 
 # Contributing
