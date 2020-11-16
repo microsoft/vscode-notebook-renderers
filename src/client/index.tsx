@@ -4,9 +4,9 @@
 // This must be on top, do not change. Required by webpack.
 // eslint-disable-next-line no-unused-vars
 declare let __webpack_public_path__: string;
+declare const scriptUrl: string;
 const getPublicPath = () => {
-    const currentDirname = (document.currentScript as HTMLScriptElement).src.replace(/[^/]+$/, '');
-    return new URL(currentDirname).toString();
+    return new URL(scriptUrl.replace(/[^/]+$/, '')).toString();
 };
 
 // eslint-disable-next-line prefer-const
