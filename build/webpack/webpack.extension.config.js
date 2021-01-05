@@ -14,7 +14,7 @@ module.exports = {
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(constants.ExtensionRootDir, 'out', 'extension'),
+        path: path.resolve(constants.ExtensionRootDir, 'out', 'extension_renderer'),
         libraryTarget: 'commonjs2',
         devtoolModuleFilenameTemplate: '../../[resource-path]'
     },

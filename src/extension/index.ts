@@ -6,7 +6,7 @@ import * as path from 'path';
 
 export function activate(context: ExtensionContext): { rendererPath: string } {
     return {
-        rendererPath: path.join(context.extensionPath, 'out', 'client', 'renderers.js')
+        rendererPath: path.join(context.extensionPath, 'out', 'client_renderer', 'renderers.js')
     };
 }
 

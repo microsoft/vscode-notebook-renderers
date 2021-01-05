@@ -2,7 +2,7 @@
     "extends": "../tsconfig-base.json",
     "compilerOptions": {
         "rootDir": ".",
-        "outDir": "../../out/extension",
+        "outDir": "../../out/extension_renderer",
         "lib": [
             "ES2019",
             "dom"
