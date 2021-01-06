@@ -16,7 +16,7 @@ module.exports = {
         renderers: './src/client/index.tsx'
     },
     output: {
-        path: path.join(constants.ExtensionRootDir, 'out', 'client'),
+        path: path.join(constants.ExtensionRootDir, 'out', 'client_renderer'),
         filename: '[name].js',
         chunkFilename: `[name].bundle.js`
     },

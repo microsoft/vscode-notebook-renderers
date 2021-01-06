@@ -42,12 +42,12 @@
     "activationEvents": [
         "*"
     ],
-    "main": "./out/extension/index.js",
+    "main": "./out/extension_renderer/index.js",
     "contributes": {
         "notebookOutputRenderer": [
             {
                 "id": "jupyter-notebook-renderer",
-                "entrypoint": "./out/client/renderers.js",
+                "entrypoint": "./out/client_renderer/renderers.js",
                 "displayName": "Jupyter Notebook Renderer",
                 "mimeTypes": [
                     "application/geo+json",
