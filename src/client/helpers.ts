@@ -3,7 +3,7 @@
 
 import type { nbformat } from '@jupyterlab/coreutils/lib/nbformat';
 
-function concatMultilineString(str: nbformat.MultilineString, trim: boolean): string {
+export function concatMultilineString(str: nbformat.MultilineString, trim?: boolean): string {
     const nonLineFeedWhiteSpaceTrim = /(^[\t\f\v\r ]+|[\t\f\v\r ]+$)/g; // Local var so don't have to reset the lastIndex.
     if (Array.isArray(str)) {
         let result = '';
@@ -20,11 +20,4 @@ function concatMultilineString(str: nbformat.MultilineString, trim: boolean): st
         return trim ? result.replace(nonLineFeedWhiteSpaceTrim, '') : result;
     }
     return trim ? str.toString().replace(nonLineFeedWhiteSpaceTrim, '') : str.toString();
-}
-
-export function concatMultilineStringOutput(str: nbformat.MultilineString): string {
-    return concatMultilineString(str, true);
-}
-export function concatMultilineStringInput(str: nbformat.MultilineString): string {
-    return concatMultilineString(str, false);
 }
