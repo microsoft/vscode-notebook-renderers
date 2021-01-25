@@ -4,8 +4,7 @@
 import type { nbformat } from '@jupyterlab/coreutils';
 import type { JSONObject } from '@phosphor/coreutils';
 import * as React from 'react';
-import { concatMultilineStringOutput } from './helpers';
-import { fixLatexEquations } from './latexManipulation';
+import { concatMultilineString } from './helpers';
 import { fixMarkdown } from './markdownManipulation';
 import { getTransform } from './transforms';
 
@@ -23,10 +22,11 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         let data: nbformat.MultilineString | JSONObject = mimeBundle[this.props.mimeType!];
 
-        // Fixup latex to make sure it has the requisite $$ around it
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (this.props.mimeType! === 'text/latex') {
-            data = fixLatexEquations(concatMultilineStringOutput(data as nbformat.MultilineString), true);
+        // For un-executed output we might get text or svg output as multiline string arrays
+        // we want to concat those so we don't display a bunch of weird commas as we expect
+        // Single strings in our output
+        if (Array.isArray(data)) {
+            data = concatMultilineString(data as nbformat.MultilineString, true);
         }
 
         switch (this.props.mimeType) {
@@ -91,7 +91,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     }
     private renderLatex(data: nbformat.MultilineString | JSONObject) {
         // Fixup latex to make sure it has the requisite $$ around it
-        data = fixMarkdown(concatMultilineStringOutput(data as nbformat.MultilineString), true);
+        data = fixMarkdown(concatMultilineString(data as nbformat.MultilineString, true), true);
         return this.renderOutput(data);
     }
 }
