@@ -49,6 +49,7 @@ function convertVSCodeOutputToExecutResultOrDisplayData(
     // Send metadata only for the mimeType we are interested in.
     const customMetadata = request.output.metadata?.custom;
     if (customMetadata) {
+        // Support for Old API
         if (customMetadata[request.mimeType]) {
             metadata[request.mimeType] = customMetadata[request.mimeType];
         }
@@ -58,8 +59,18 @@ function convertVSCodeOutputToExecutResultOrDisplayData(
         if (customMetadata.unconfined) {
             metadata.unconfined = customMetadata.unconfined;
         }
+    } else {
+        // New API.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const customMetadata = request.output.metadata as Record<string, any> | undefined;
+        if (customMetadata && customMetadata[request.mimeType] && customMetadata[request.mimeType].metadata) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Object.assign(metadata, customMetadata[request.mimeType].metadata);
+            if (request.mimeType in customMetadata[request.mimeType].metadata) {
+                Object.assign(metadata, customMetadata[request.mimeType].metadata[request.mimeType]);
+            }
+        }
     }
-
     return {
         data: {
             [request.mimeType]: request.output.data[request.mimeType]
