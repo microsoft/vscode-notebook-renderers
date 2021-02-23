@@ -62,12 +62,12 @@ function convertVSCodeOutputToExecutResultOrDisplayData(
     } else {
         // New API.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const customMetadata = request.output.metadata as Record<string, any> | undefined;
-        if (customMetadata && customMetadata[request.mimeType] && customMetadata[request.mimeType].metadata) {
+        const outputMetadata = request.output.metadata as Record<string, any> | undefined;
+        if (outputMetadata && outputMetadata[request.mimeType] && outputMetadata[request.mimeType].metadata) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            Object.assign(metadata, customMetadata[request.mimeType].metadata);
-            if (request.mimeType in customMetadata[request.mimeType].metadata) {
-                Object.assign(metadata, customMetadata[request.mimeType].metadata[request.mimeType]);
+            Object.assign(metadata, outputMetadata[request.mimeType].metadata);
+            if (request.mimeType in outputMetadata[request.mimeType].metadata) {
+                Object.assign(metadata, outputMetadata[request.mimeType].metadata[request.mimeType]);
             }
         }
     }
