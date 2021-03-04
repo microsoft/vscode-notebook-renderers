@@ -4,6 +4,7 @@
 import type { nbformat } from '@jupyterlab/coreutils';
 import type { JSONObject } from '@phosphor/coreutils';
 import * as React from 'react';
+import { AudioPlayer } from './audioPlayer';
 import { concatMultilineStringOutput } from './helpers';
 import { fixLatexEquations } from './latexManipulation';
 import { fixMarkdown } from './markdownManipulation';
@@ -35,7 +36,8 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             case 'image/png':
             case 'image/jpeg':
                 return this.renderImage(mimeBundle, this.props.output.metadata);
-
+            case 'text/html':
+                return this.renderHTML(data, this.props.mimeType);
             default:
                 return this.renderOutput(data, this.props.mimeType);
         }
@@ -93,6 +95,44 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         // Fixup latex to make sure it has the requisite $$ around it
         data = fixMarkdown(concatMultilineStringOutput(data as nbformat.MultilineString), true);
         return this.renderOutput(data);
+    }
+
+    private renderHTML(data: nbformat.MultilineString | JSONObject, mimeType?: string): JSX.Element {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars
+        const Transform = getTransform(this.props.mimeType!);
+        const divStyle: React.CSSProperties = {
+            backgroundColor: mimeType && isAltairPlot(mimeType) ? 'white' : undefined
+        };
+
+        // try to detect if node contains audio
+        const element = document.createElement('div');
+        element.innerHTML = String(data);
+        const audioElements = element.getElementsByTagName('audio');
+        if (audioElements.length >= 1) {
+            const tracks = [];
+            // scan for audio in nodes and extract them
+            for (let i = 0; i < audioElements.length; i++) {
+                const singleAudio = audioElements?.item(i)?.getElementsByTagName('source');
+                if (singleAudio?.item(0)?.hasAttribute('src')) {
+                    tracks.push(String(singleAudio?.item(i)?.src));
+                }
+            }
+            return (
+                <div style={divStyle}>
+                    <Transform data={data} />
+                    <h2>Extracted audio:</h2>
+                    {tracks.map((track) => (
+                        <AudioPlayer audio={track}></AudioPlayer>
+                    ))}
+                </div>
+            );
+        } else {
+            return (
+                <div style={divStyle}>
+                    <Transform data={data} />
+                </div>
+            );
+        }
     }
 }
 

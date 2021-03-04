@@ -1,0 +1,66 @@
+.audioplayer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(241, 243, 244);
+    height: 50px;
+    font-size: 14px;
+    font-family: Helvetica, sans-serif;
+    width: 300px;
+    flex-shrink: 0;
+    bottom: 0;
+    text-indent: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 25px;
+}
+
+.audioplayer + .audioplayer {
+    margin-bottom: 15px;
+}
+
+.seek-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1 1;
+    height: 16px;
+    min-width: 0;
+}
+
+.playButton {
+    display: flex;
+    flex: none;
+    border: none;
+    color: black;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 8px 0 20px;
+    padding: 0 2px 0 2px;
+    background-color: initial;
+}
+
+.time {
+    flex: none;
+    display: flex;
+    border: none;
+    cursor: default;
+    height: 30px;
+    margin: 0 15px 0 5px;
+    padding: 0;
+    line-height: 30px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    color: black;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0;
+    text-shadow: none;
+    text-decoration: none;
+}
+
