@@ -48,9 +48,9 @@ interface OldNotebookOutputEventParams {
  * This will be exposed as a public method on window for renderer to render output.
  */
 function renderOutput(request: NotebookOutputEventParams) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mimeString = request.mime || (request as any).mimeType;
     try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const mimeString = request.mime || (request as any).mimeType;
         console.log('request', request);
         const output = convertVSCodeOutputToExecutResultOrDisplayData(request);
         console.log(`Rendering mimeType ${mimeString}`, output);
@@ -58,7 +58,7 @@ function renderOutput(request: NotebookOutputEventParams) {
 
         ReactDOM.render(React.createElement(CellOutput, { mimeType: mimeString, output }, null), request.element);
     } catch (ex) {
-        console.error(`Failed to render mime type ${request.mime}`, ex);
+        console.error(`Failed to render mime type ${mimeString}`, ex);
     }
 }
 
