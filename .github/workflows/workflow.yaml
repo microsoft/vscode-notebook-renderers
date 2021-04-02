@@ -12,6 +12,7 @@ on:
   pull_request:
 
 env:
+  NODE_VERSION: 12.14.1
   CACHE_NPM_DEPS: cache-npm
   CACHE_OUT_DIRECTORY: cache-out-directory
 
