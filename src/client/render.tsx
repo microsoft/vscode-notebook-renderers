@@ -50,9 +50,10 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const imgStyle: Record<string, string | number> = {};
         const divStyle: Record<string, string | number> = { overflow: 'scroll' }; // This is the default style used by Jupyter lab.
         const imgSrc = `data:${mimeType};base64,${mimeBundle[mimeType]}`;
+        const customMetadata = metadata.metadata as JSONObject | undefined;
 
-        if (typeof metadata.needs_background === 'string') {
-            divStyle.backgroundColor = metadata.needs_background === 'light' ? 'white' : 'black';
+        if (customMetadata && typeof customMetadata.needs_background === 'string') {
+            divStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const imageMetadata = metadata[mimeType] as Record<string, any> | undefined;

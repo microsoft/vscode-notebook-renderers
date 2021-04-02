@@ -54,7 +54,6 @@ function renderOutput(request: NotebookOutputEventParams) {
         console.log('request', request);
         const output = convertVSCodeOutputToExecutResultOrDisplayData(request);
         console.log(`Rendering mimeType ${mimeString}`, output);
-        console.log('request output', output);
 
         ReactDOM.render(React.createElement(CellOutput, { mimeType: mimeString, output }, null), request.element);
     } catch (ex) {
