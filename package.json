@@ -104,12 +104,15 @@
         "@nteract/transform-geojson": "^3.2.3",
         "@nteract/transform-model-debug": "^3.2.3",
         "@nteract/transform-plotly": "^6.0.0",
-        "@nteract/transform-vega": "^6.0.3",
+        "@nteract/transform-vega": "7.0.10",
         "@nteract/transforms": "^4.4.4",
         "@phosphor/widgets": "^1.9.3",
         "lodash": "^4.17.19",
+        "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
+        "styled-components": "5.2.1",
+        "underscore": "1.12.1",
         "uuid": "^3.3.2"
     },
     "devDependencies": {
