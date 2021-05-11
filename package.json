@@ -107,7 +107,7 @@
         "@nteract/transform-vega": "7.0.10",
         "@nteract/transforms": "^4.4.4",
         "@phosphor/widgets": "^1.9.3",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
