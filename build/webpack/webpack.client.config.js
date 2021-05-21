@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 const common = require('./common');
-//const FixDefaultImportPlugin = require('webpack-fix-default-import-plugin');
 const path = require('path');
 const constants = require('../constants');
 const configFileName = 'src/client/tsconfig.json';
@@ -29,7 +28,6 @@ module.exports = {
     mode: isProdBuild ? 'production' : 'development',
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
     plugins: [
-        //new FixDefaultImportPlugin(),
         new ForkTsCheckerWebpackPlugin({
             checkSyntacticErrors: true,
             tsconfig: configFileName,
@@ -37,12 +35,8 @@ module.exports = {
             memoryLimit: 9096
         }),
         new DefinePlugin({
-            // Path from the output filename to the output directory
-            //__webpack_relative_entrypoint_to_root__: JSON.stringify(
-              //path.posix.relative(path.posix.dirname(`/${outputFilename}`), '/'),
-            //),
-            scriptUrl: 'import.meta.url',
-          }),
+            scriptUrl: 'import.meta.url'
+        }),
         ...common.getDefaultPlugins('extension')
     ],
     stats: {

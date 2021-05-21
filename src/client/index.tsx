@@ -30,7 +30,6 @@ export const activate: ActivationFunction = () => ({
  * This will be exposed as a public method on window for renderer to render output.
  */
 function renderOutput(cellInfo: CellInfo) {
-    console.log('IANHU');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mimeString = cellInfo.mime || (cellInfo as any).mimeType;
     try {
