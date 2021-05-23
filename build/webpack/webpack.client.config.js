@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 const common = require('./common');
-const FixDefaultImportPlugin = require('webpack-fix-default-import-plugin');
 const path = require('path');
 const constants = require('../constants');
 const configFileName = 'src/client/tsconfig.json';
+const { DefinePlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // Any build on the CI is considered production mode.
 const isProdBuild = constants.isCI || process.argv.some((argv) => argv.includes('mode') && argv.includes('production'));
@@ -18,20 +18,24 @@ module.exports = {
     output: {
         path: path.join(constants.ExtensionRootDir, 'out', 'client_renderer'),
         filename: '[name].js',
-        chunkFilename: `[name].bundle.js`
+        chunkFilename: `[name].bundle.js`,
+        libraryTarget: 'module'
     },
+    experiments: {
+        outputModule: true
+    },
+    target: 'node',
     mode: isProdBuild ? 'production' : 'development',
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
-    node: {
-        fs: 'empty'
-    },
     plugins: [
-        new FixDefaultImportPlugin(),
         new ForkTsCheckerWebpackPlugin({
             checkSyntacticErrors: true,
             tsconfig: configFileName,
             reportFiles: ['src/client/**/*.{ts,tsx}'],
             memoryLimit: 9096
+        }),
+        new DefinePlugin({
+            scriptUrl: 'import.meta.url'
         }),
         ...common.getDefaultPlugins('extension')
     ],
@@ -42,6 +46,9 @@ module.exports = {
         hints: false
     },
     resolve: {
+        fallback: {
+            fs: false
+        },
         extensions: ['.ts', '.tsx', '.js', '.json', '.svg']
     },
     module: {
@@ -112,6 +119,14 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: ['style-loader', 'css-loader', 'less-loader']
+            },
+            {
+                test: /\.node$/,
+                use: [
+                    {
+                        loader: 'node-loader'
+                    }
+                ]
             }
         ]
     }
