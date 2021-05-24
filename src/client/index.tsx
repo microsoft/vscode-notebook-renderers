@@ -19,11 +19,14 @@ import * as ReactDOM from 'react-dom';
 import { CellOutput } from './render';
 import { ActivationFunction, CellInfo } from 'vscode-notebook-renderer';
 
-export const activate: ActivationFunction = () => ({
-    renderCell(_id, cellInfo: CellInfo) {
-        renderOutput(cellInfo);
-    }
-});
+export const activate: ActivationFunction = () => {
+    console.log('Jupyter Notebook Renderer activated');
+    return {
+        renderCell(_id, cellInfo: CellInfo) {
+            renderOutput(cellInfo);
+        }
+    };
+};
 
 /**
  * Called from renderer to render output.
