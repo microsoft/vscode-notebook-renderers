@@ -24,7 +24,6 @@ module.exports = {
     experiments: {
         outputModule: true
     },
-    target: 'node',
     mode: isProdBuild ? 'production' : 'development',
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
     plugins: [
@@ -47,7 +46,9 @@ module.exports = {
     },
     resolve: {
         fallback: {
-            fs: false
+            fs: false,
+            path: require.resolve('path-browserify'),
+            util: require.resolve('util')
         },
         extensions: ['.ts', '.tsx', '.js', '.json', '.svg']
     },
