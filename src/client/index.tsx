@@ -49,9 +49,16 @@ function renderOutput(cellInfo: CellInfo) {
 function convertVSCodeOutputToExecutResultOrDisplayData(
     cellInfo: CellInfo
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
+    const isImage = cellInfo.mime.toLowerCase().startsWith('image/');
+    const isJson = cellInfo.mime.toLowerCase().includes('json');
+    const value = isImage
+        ? btoa(String.fromCharCode(...new Uint8Array(cellInfo.bytes())))
+        : isJson
+        ? cellInfo.json()
+        : cellInfo.text();
     return {
         data: {
-            [cellInfo.mime]: cellInfo.mime.toLowerCase().includes('json') ? cellInfo.json() : cellInfo.text()
+            [cellInfo.mime]: value
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         metadata: (cellInfo.metadata as any) || {},
