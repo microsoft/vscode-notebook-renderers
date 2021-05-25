@@ -51,8 +51,7 @@ function convertVSCodeOutputToExecutResultOrDisplayData(
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
     return {
         data: {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            [cellInfo.mime]: cellInfo.value as any
+            [cellInfo.mime]: cellInfo.mime.toLowerCase().includes('json') ? cellInfo.json() : cellInfo.text()
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         metadata: (cellInfo.metadata as any) || {},
