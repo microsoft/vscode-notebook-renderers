@@ -135,6 +135,9 @@ module.exports = {
                 test: /plotly\.js$/,
                 use: [
                     {
+                        // https://github.com/plotly/plotly.js/issues/3518#issuecomment-779758848
+                        // Plotly bundle doesn't work under ES6 import. Using the work around (minified version)
+                        // from the link above
                         loader: StringReplacePlugin.replace({
                             replacements: [
                                 {
