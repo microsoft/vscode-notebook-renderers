@@ -44,7 +44,7 @@
     ],
     "main": "./out/extension_renderer/index.js",
     "contributes": {
-        "notebookOutputRenderer": [
+        "notebookRenderer": [
             {
                 "id": "jupyter-notebook-renderer",
                 "entrypoint": "./out/client_renderer/renderers.js",
