@@ -50,7 +50,8 @@ function convertVSCodeOutputToExecutResultOrDisplayData(
     cellInfo: CellInfo
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
     const isImage = cellInfo.mime.toLowerCase().startsWith('image/');
-    const isJson = cellInfo.mime.toLowerCase().includes('json');
+    // We add a metadata item `__isJson` to tell us whether the data is of type JSON or not.
+    const isJson = (cellInfo.metadata as Record<string, unknown>)?.__isJson === true;
     const value = isImage ? cellInfo.blob() : isJson ? cellInfo.json() : cellInfo.text();
     return {
         data: {
