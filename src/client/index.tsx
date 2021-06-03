@@ -17,12 +17,12 @@ import { nbformat } from '@jupyterlab/coreutils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { CellOutput } from './render';
-import { ActivationFunction, IOutputItem } from 'vscode-notebook-renderer';
+import { ActivationFunction, OutputItem } from 'vscode-notebook-renderer';
 
 export const activate: ActivationFunction = () => {
     console.log('Jupyter Notebook Renderer activated');
     return {
-        renderOutputItem(outputItem: IOutputItem, element: HTMLElement) {
+        renderOutputItem(outputItem: OutputItem, element: HTMLElement) {
             renderOutput(outputItem, element);
         }
     };
@@ -32,7 +32,7 @@ export const activate: ActivationFunction = () => {
  * Called from renderer to render output.
  * This will be exposed as a public method on window for renderer to render output.
  */
-function renderOutput(outputItem: IOutputItem, element: HTMLElement) {
+function renderOutput(outputItem: OutputItem, element: HTMLElement) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mimeString = outputItem.mime || (outputItem as any).mimeType;
     try {
@@ -47,7 +47,7 @@ function renderOutput(outputItem: IOutputItem, element: HTMLElement) {
 }
 
 function convertVSCodeOutputToExecuteResultOrDisplayData(
-    outputItem: IOutputItem
+    outputItem: OutputItem
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
     const isImage = outputItem.mime.toLowerCase().startsWith('image/');
     // We add a metadata item `__isJson` to tell us whether the data is of type JSON or not.
