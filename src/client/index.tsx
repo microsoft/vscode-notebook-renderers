@@ -17,13 +17,13 @@ import { nbformat } from '@jupyterlab/coreutils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { CellOutput } from './render';
-import { ActivationFunction, CellInfo } from 'vscode-notebook-renderer';
+import { ActivationFunction, OutputItem } from 'vscode-notebook-renderer';
 
 export const activate: ActivationFunction = () => {
     console.log('Jupyter Notebook Renderer activated');
     return {
-        renderCell(_id, cellInfo: CellInfo) {
-            renderOutput(cellInfo);
+        renderOutputItem(outputItem: OutputItem, element: HTMLElement) {
+            renderOutput(outputItem, element);
         }
     };
 };
@@ -32,35 +32,35 @@ export const activate: ActivationFunction = () => {
  * Called from renderer to render output.
  * This will be exposed as a public method on window for renderer to render output.
  */
-function renderOutput(cellInfo: CellInfo) {
+function renderOutput(outputItem: OutputItem, element: HTMLElement) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mimeString = cellInfo.mime || (cellInfo as any).mimeType;
+    const mimeString = outputItem.mime || (outputItem as any).mimeType;
     try {
-        console.log('request', cellInfo);
-        const output = convertVSCodeOutputToExecutResultOrDisplayData(cellInfo);
+        console.log('request', outputItem);
+        const output = convertVSCodeOutputToExecuteResultOrDisplayData(outputItem);
         console.log(`Rendering mimeType ${mimeString}`, output);
 
-        ReactDOM.render(React.createElement(CellOutput, { mimeType: mimeString, output }, null), cellInfo.element);
+        ReactDOM.render(React.createElement(CellOutput, { mimeType: mimeString, output }, null), element);
     } catch (ex) {
         console.error(`Failed to render mime type ${mimeString}`, ex);
     }
 }
 
-function convertVSCodeOutputToExecutResultOrDisplayData(
-    cellInfo: CellInfo
+function convertVSCodeOutputToExecuteResultOrDisplayData(
+    outputItem: OutputItem
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
-    const isImage = cellInfo.mime.toLowerCase().startsWith('image/');
+    const isImage = outputItem.mime.toLowerCase().startsWith('image/');
     // We add a metadata item `__isJson` to tell us whether the data is of type JSON or not.
-    const isJson = (cellInfo.metadata as Record<string, unknown>)?.__isJson === true;
-    const value = isImage ? cellInfo.blob() : isJson ? cellInfo.json() : cellInfo.text();
+    const isJson = (outputItem.metadata as Record<string, unknown>)?.__isJson === true;
+    const value = isImage ? outputItem.blob() : isJson ? outputItem.json() : outputItem.text();
     return {
         data: {
-            [cellInfo.mime]: value
+            [outputItem.mime]: value
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        metadata: (cellInfo.metadata as any) || {},
+        metadata: (outputItem.metadata as any) || {},
         execution_count: null,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        output_type: (cellInfo.metadata as any)?.outputType || 'execute_result'
+        output_type: (outputItem.metadata as any)?.outputType || 'execute_result'
     };
 }
