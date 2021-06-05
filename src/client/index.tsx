@@ -16,87 +16,51 @@ __webpack_public_path__ = getPublicPath();
 import { nbformat } from '@jupyterlab/coreutils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { NotebookOutputEventParams } from 'vscode-notebook-renderer';
-import { JupyterNotebookRenderer } from './constants';
 import { CellOutput } from './render';
+import { ActivationFunction, OutputItem } from 'vscode-notebook-renderer';
 
-const notebookApi = acquireNotebookRendererApi(JupyterNotebookRenderer);
-
-notebookApi.onDidCreateOutput(renderOutput);
-
-// Copy of vscode-notebook-renderer old types as of 1.48
-// Keep these so we can support both the old interface and the new interface
-// Interface change here: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/51675/files
-interface OldNotebookCellOutputMetadata {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    custom?: { [key: string]: any };
-}
-interface OldNotebookOutput {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: { [mimeType: string]: any };
-    metadata?: OldNotebookCellOutputMetadata;
-}
-interface OldNotebookOutputEventParams {
-    element: HTMLElement;
-    outputId: string;
-    output: OldNotebookOutput;
-    mimeType: string;
-}
+export const activate: ActivationFunction = () => {
+    console.log('Jupyter Notebook Renderer activated');
+    return {
+        renderOutputItem(outputItem: OutputItem, element: HTMLElement) {
+            renderOutput(outputItem, element);
+        }
+    };
+};
 
 /**
  * Called from renderer to render output.
  * This will be exposed as a public method on window for renderer to render output.
  */
-function renderOutput(request: NotebookOutputEventParams) {
+function renderOutput(outputItem: OutputItem, element: HTMLElement) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mimeString = request.mime || (request as any).mimeType;
+    const mimeString = outputItem.mime || (outputItem as any).mimeType;
     try {
-        console.log('request', request);
-        const output = convertVSCodeOutputToExecutResultOrDisplayData(request);
+        console.log('request', outputItem);
+        const output = convertVSCodeOutputToExecuteResultOrDisplayData(outputItem);
         console.log(`Rendering mimeType ${mimeString}`, output);
 
-        ReactDOM.render(React.createElement(CellOutput, { mimeType: mimeString, output }, null), request.element);
+        ReactDOM.render(React.createElement(CellOutput, { mimeType: mimeString, output }, null), element);
     } catch (ex) {
         console.error(`Failed to render mime type ${mimeString}`, ex);
     }
 }
 
-function convertVSCodeOutputToExecutResultOrDisplayData(
-    request: NotebookOutputEventParams
+function convertVSCodeOutputToExecuteResultOrDisplayData(
+    outputItem: OutputItem
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
-    if ('mime' in request) {
-        // New API
-        return {
-            data: {
-                [request.mime]: request.value
-            },
-            metadata: request.metadata || {},
-            execution_count: null,
-            output_type: request.metadata?.outputType || 'execute_result'
-        };
-    } else {
-        // Old API
+    const isImage = outputItem.mime.toLowerCase().startsWith('image/');
+    // We add a metadata item `__isJson` to tell us whether the data is of type JSON or not.
+    const isJson = (outputItem.metadata as Record<string, unknown>)?.__isJson === true;
+    const value = isImage ? outputItem.blob() : isJson ? outputItem.json() : outputItem.text();
+    return {
+        data: {
+            [outputItem.mime]: value
+        },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const metadata: Record<string, any> = {};
-
-        const oldRequest = (request as unknown) as OldNotebookOutputEventParams;
+        metadata: (outputItem.metadata as any) || {},
+        execution_count: null,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const outputMetadata = oldRequest.output.metadata as Record<string, any> | undefined;
-        if (outputMetadata && outputMetadata[oldRequest.mimeType] && outputMetadata[oldRequest.mimeType].metadata) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            Object.assign(metadata, outputMetadata[oldRequest.mimeType].metadata);
-            if (oldRequest.mimeType in outputMetadata[oldRequest.mimeType].metadata) {
-                Object.assign(metadata, outputMetadata[oldRequest.mimeType].metadata[oldRequest.mimeType]);
-            }
-        }
-
-        return {
-            data: {
-                [oldRequest.mimeType]: oldRequest.output.data[oldRequest.mimeType]
-            },
-            metadata,
-            execution_count: null,
-            output_type: oldRequest.output.metadata?.custom?.vscode?.outputType || 'execute_result'
-        };
-    }
+        output_type: (outputItem.metadata as any)?.outputType || 'execute_result'
+    };
 }

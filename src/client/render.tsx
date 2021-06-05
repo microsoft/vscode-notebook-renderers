@@ -33,8 +33,9 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             case 'text/latex':
                 return this.renderLatex(data);
             case 'image/png':
+            case 'image/gif':
             case 'image/jpeg':
-                return this.renderImage(mimeBundle, this.props.output.metadata);
+                return this.renderImage(this.props.mimeType, (data as unknown) as Blob, this.props.output.metadata);
 
             default:
                 return this.renderOutput(data, this.props.mimeType);
@@ -44,12 +45,10 @@ export class CellOutput extends React.Component<ICellOutputProps> {
      * Custom rendering of image/png and image/jpeg to handle custom Jupyter metadata.
      * Behavior adopted from Jupyter lab.
      */
-    private renderImage(mimeBundle: nbformat.IMimeBundle, metadata: Record<string, unknown> = {}) {
-        const mimeType = 'image/png' in mimeBundle ? 'image/png' : 'image/jpeg';
-
+    private renderImage(mimeType: string, data: Blob, metadata: Record<string, unknown> = {}) {
         const imgStyle: Record<string, string | number> = {};
         const divStyle: Record<string, string | number> = { overflow: 'scroll' }; // This is the default style used by Jupyter lab.
-        const imgSrc = `data:${mimeType};base64,${mimeBundle[mimeType]}`;
+        const imgSrc = URL.createObjectURL(data);
         const customMetadata = metadata.metadata as JSONObject | undefined;
 
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
