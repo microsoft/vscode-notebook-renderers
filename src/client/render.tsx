@@ -33,9 +33,8 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             case 'text/latex':
                 return this.renderLatex(data);
             case 'image/png':
-            case 'image/gif':
             case 'image/jpeg':
-                return this.renderImage(this.props.mimeType, (data as unknown) as Blob, this.props.output.metadata);
+                return this.renderImage(this.props.mimeType, mimeBundle, this.props.output.metadata);
 
             default:
                 return this.renderOutput(data, this.props.mimeType);
@@ -45,10 +44,14 @@ export class CellOutput extends React.Component<ICellOutputProps> {
      * Custom rendering of image/png and image/jpeg to handle custom Jupyter metadata.
      * Behavior adopted from Jupyter lab.
      */
-    private renderImage(mimeType: string, data: Blob, metadata: Record<string, unknown> = {}) {
+    private renderImage(
+        mimeType: 'image/png' | 'image/jpeg',
+        mimeBundle: nbformat.IMimeBundle,
+        metadata: Record<string, unknown> = {}
+    ) {
         const imgStyle: Record<string, string | number> = {};
         const divStyle: Record<string, string | number> = { overflow: 'scroll' }; // This is the default style used by Jupyter lab.
-        const imgSrc = URL.createObjectURL(data);
+        const imgSrc = `data:${mimeType};base64,${mimeBundle[mimeType]}`;
         const customMetadata = metadata.metadata as JSONObject | undefined;
 
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
@@ -78,16 +81,24 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         );
     }
     private renderOutput(data: nbformat.MultilineString | JSONObject, mimeType?: string) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars
-        const Transform = getTransform(this.props.mimeType!);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-explicit-any
+        const Transform: any = getTransform(this.props.mimeType!);
+        const vegaPlot = mimeType && isVegaPlot(mimeType);
         const divStyle: React.CSSProperties = {
-            backgroundColor: mimeType && isAltairPlot(mimeType) ? 'white' : undefined
+            backgroundColor: vegaPlot ? 'white' : undefined
         };
-        return (
-            <div style={divStyle}>
-                <Transform data={data} />
-            </div>
-        );
+        let dataView;
+        if (vegaPlot) {
+            // Vega library expects data to be passed as serialized JSON instead of a native
+            // JS object.
+            dataView = (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                <Transform data={JSON.stringify(data)} onResult={(r: any) => r.finalize()} onError={console.error} />
+            );
+        } else {
+            dataView = <Transform data={data} />;
+        }
+        return <div style={divStyle}>{dataView}</div>;
     }
     private renderLatex(data: nbformat.MultilineString | JSONObject) {
         // Fixup latex to make sure it has the requisite $$ around it
@@ -96,6 +107,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     }
 }
 
-function isAltairPlot(mimeType: string) {
+function isVegaPlot(mimeType: string) {
     return mimeType.includes('application/vnd.vega');
 }
