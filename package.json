@@ -49,6 +49,7 @@
                 "id": "jupyter-notebook-renderer",
                 "entrypoint": "./out/client_renderer/renderers.js",
                 "displayName": "Jupyter Notebook Renderer",
+                "requiresMessaging": "optional",
                 "mimeTypes": [
                     "application/geo+json",
                     "application/vdom.v1+json",
@@ -66,6 +67,7 @@
                     "image/gif",
                     "image/png",
                     "image/jpeg",
+                    "image/svg+xml",
                     "text/latex",
                     "text/vnd.plotly.v1+html"
                 ]

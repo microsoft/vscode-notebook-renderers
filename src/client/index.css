@@ -1,0 +1,14 @@
+.saveAsSvgPath {
+    fill: #424242 !important;
+    fill-rule: evenodd !important;
+    clip-rule: evenodd !important;
+}
+.hidden {
+    display: none !important;
+}
+.saveAs {
+    cursor: pointer;
+}
+.svgContent {
+    background-color: white;
+}
