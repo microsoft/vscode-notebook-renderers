@@ -90,7 +90,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                 this.props.ctx.postMessage({
                     type: 'saveAs',
                     outputId: this.props.outputId,
-                    mimnType: this.props.mimeType
+                    mimeType: this.props.mimeType
                 });
             }
         };
