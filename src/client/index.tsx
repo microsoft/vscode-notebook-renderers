@@ -52,7 +52,8 @@ function renderOutput(outputItem: OutputItem, element: HTMLElement, ctx: Rendere
 function convertVSCodeOutputToExecuteResultOrDisplayData(
     outputItem: OutputItem
 ): nbformat.IExecuteResult | nbformat.IDisplayData {
-    const isImage = outputItem.mime.toLowerCase().startsWith('image/') && !outputItem.mime.toLowerCase().includes('svg');
+    const isImage =
+        outputItem.mime.toLowerCase().startsWith('image/') && !outputItem.mime.toLowerCase().includes('svg');
     // We add a metadata item `__isJson` to tell us whether the data is of type JSON or not.
     const isJson = (outputItem.metadata as Record<string, unknown>)?.__isJson === true;
     const value = isImage ? outputItem.blob() : isJson ? outputItem.json() : outputItem.text();

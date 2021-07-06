@@ -137,14 +137,20 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         );
     }
     private renderOutput(data: nbformat.MultilineString | JSONObject, mimeType?: string) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars
-        const Transform = getTransform(this.props.mimeType!);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-explicit-any
+        const Transform: any = getTransform(this.props.mimeType!);
+        const vegaPlot = mimeType && isVegaPlot(mimeType);
         const divStyle: React.CSSProperties = {
-            backgroundColor: mimeType && isAltairPlot(mimeType) ? 'white' : undefined
+            backgroundColor: vegaPlot ? 'white' : undefined
         };
+        if (vegaPlot) {
+            // Vega library expects data to be passed as serialized JSON instead of a native
+            // JS object.
+            data = typeof data === 'string' ? data : JSON.stringify(data);
+        }
         return (
             <div style={divStyle}>
-                <Transform data={data} />
+                <Transform data={data} onError={console.error} />
             </div>
         );
     }
@@ -155,6 +161,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     }
 }
 
-function isAltairPlot(mimeType: string) {
+function isVegaPlot(mimeType: string) {
     return mimeType.includes('application/vnd.vega');
 }

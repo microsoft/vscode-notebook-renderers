@@ -35,7 +35,8 @@ module.exports = {
             memoryLimit: 9096
         }),
         new DefinePlugin({
-            scriptUrl: 'import.meta.url'
+            scriptUrl: 'import.meta.url',
+            'process.env': '{}' // utils references `process.env.xxx`
         }),
         new StringReplacePlugin(),
         ...common.getDefaultPlugins('extension')
@@ -50,7 +51,7 @@ module.exports = {
         fallback: {
             fs: false,
             path: require.resolve('path-browserify'),
-            util: require.resolve('util')
+            util: require.resolve('util') // vega uses `util.promisify` (we need something that works outside node)
         },
         extensions: ['.ts', '.tsx', '.js', '.json', '.svg']
     },
