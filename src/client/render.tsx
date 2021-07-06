@@ -137,23 +137,20 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         );
     }
     private renderOutput(data: nbformat.MultilineString | JSONObject, mimeType?: string) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-explicit-any
         const Transform: any = getTransform(this.props.mimeType!);
         const vegaPlot = mimeType && isVegaPlot(mimeType);
         const divStyle: React.CSSProperties = {
             backgroundColor: vegaPlot ? 'white' : undefined
         };
-        let dataView;
         if (vegaPlot) {
             // Vega library expects data to be passed as serialized JSON instead of a native
             // JS object.
-            dataView = <Transform data={JSON.stringify(data)} onResult={(r: any) => r.finalize()} onError={console.error} />;
-        } else {
-            dataView = <Transform data={data} />;
+            data = typeof data === 'string' ? data : JSON.stringify(data);
         }
         return (
             <div style={divStyle}>
-                {dataView}
+                <Transform data={data} onError={console.error} />
             </div>
         );
     }
