@@ -1,4 +1,4 @@
-.saveAsSvgPath {
+.plotIconSvgPath {
     fill: #424242 !important;
     fill-rule: evenodd !important;
     clip-rule: evenodd !important;
@@ -6,7 +6,7 @@
 .hidden {
     display: none !important;
 }
-.saveAs {
+.plotIcon {
     cursor: pointer;
 }
 .svgContent {

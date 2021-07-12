@@ -20,9 +20,11 @@ export interface ICellOutputProps {
 export class CellOutput extends React.Component<ICellOutputProps> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly saveAsIcon: React.RefObject<HTMLButtonElement>;
+    private readonly plotIcon: React.RefObject<HTMLButtonElement>;
     constructor(prop: ICellOutputProps) {
         super(prop);
         this.saveAsIcon = React.createRef<HTMLButtonElement>();
+        this.plotIcon = React.createRef<HTMLButtonElement>();
     }
     public render() {
         const mimeBundle = this.props.output.data as nbformat.IMimeBundle; // NOSONAR
@@ -64,7 +66,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const imgSrc =
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as JSONObject | undefined;
-
+        const showPlotViewer = metadata.__displayOpenPlotIcon === true;
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
             divStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
         }
@@ -94,10 +96,27 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                 });
             }
         };
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const onMouseOver = () => (this.saveAsIcon.current!.className = 'saveAs');
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const onMouseOut = () => (this.saveAsIcon.current!.className = 'saveAs hidden');
+        const openPlot = () => {
+            if (this.props.ctx.postMessage) {
+                this.props.ctx.postMessage({
+                    type: 'openPlot',
+                    outputId: this.props.outputId,
+                    mimeType: this.props.mimeType
+                });
+            }
+        };
+        const onMouseOver = () => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.saveAsIcon.current!.className = 'plotIcon';
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.plotIcon.current!.className = 'plotIcon';
+        };
+        const onMouseOut = () => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.saveAsIcon.current!.className = 'plotIcon hidden';
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.plotIcon.current!.className = 'plotIcon hidden';
+        };
         const contents = imgSrc ? (
             <img src={imgSrc} style={imgStyle}></img>
         ) : (
@@ -108,7 +127,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                 <button
                     ref={this.saveAsIcon}
                     style={{ position: 'absolute', top: '5px', right: '5px' }}
-                    className={'saveAs hidden'}
+                    className={'plotIcon hidden'}
                     onClick={saveAs}
                     role="button"
                     aria-pressed="false"
@@ -125,13 +144,42 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                                 xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
-                                    className={'saveAsSvgPath'}
+                                    className={'plotIconSvgPath'}
                                     d="M12.0147 2.8595L13.1397 3.9845L13.25 4.25V12.875L12.875 13.25H3.125L2.75 12.875V3.125L3.125 2.75H11.75L12.0147 2.8595ZM3.5 3.5V12.5H12.5V4.406L11.5947 3.5H10.25V6.5H5V3.5H3.5ZM8 3.5V5.75H9.5V3.5H8Z"
                                 />
                             </svg>
                         </span>
                     </span>
                 </button>
+                {showPlotViewer ? (
+                    <button
+                        ref={this.plotIcon}
+                        style={{ position: 'absolute', top: '5px', right: '45px' }}
+                        className={'plotIcon hidden'}
+                        onClick={openPlot}
+                        role="button"
+                        aria-pressed="false"
+                        title="Expand image"
+                        aria-label="Expand image"
+                    >
+                        <span>
+                            <span className="image-button-child">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        className={'plotIconSvgPath'}
+                                        d="M9.71429 6.28571V12.2857H7.14286V6.28571H9.71429ZM13.1429 2.85714V12.2857H10.5714V2.85714H13.1429ZM2.85714 13.1429H14V14H2V2H2.85714V13.1429ZM6.28571 4.57143V12.2857H3.71429V4.57143H6.28571Z"
+                                    />
+                                </svg>
+                            </span>
+                        </span>
+                    </button>
+                ) : undefined}
                 {contents}
             </div>
         );
