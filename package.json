@@ -2,9 +2,9 @@
     "name": "notebook-renderers",
     "displayName": "Notebook Renderers",
     "description": "Renderers for Notebooks",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "engines": {
-        "vscode": "^1.57.0"
+        "vscode": "^1.60.0"
     },
     "publisher": "ms-toolsai",
     "enableProposedApi": true,
