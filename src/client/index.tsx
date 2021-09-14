@@ -20,7 +20,7 @@ import { CellOutput } from './render';
 import { ActivationFunction, OutputItem, RendererContext } from 'vscode-notebook-renderer';
 
 export const activate: ActivationFunction = (ctx: RendererContext<unknown>) => {
-    console.log('Jupyter Notebook Renderer activated');
+    console.log('Jupyter Notebook Image Renderer activated');
     return {
         renderOutputItem(outputItem: OutputItem, element: HTMLElement) {
             renderOutput(outputItem, element, ctx);
@@ -36,6 +36,9 @@ function renderOutput(outputItem: OutputItem, element: HTMLElement, ctx: Rendere
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mimeString = outputItem.mime || (outputItem as any).mimeType;
     try {
+        if (!ctx.workspace.isTrusted && outputItem.mime !== 'image/png' && outputItem.mime !== 'image/jpeg') {
+            return;
+        }
         console.log('request', outputItem);
         const output = convertVSCodeOutputToExecuteResultOrDisplayData(outputItem);
         console.log(`Rendering mimeType ${mimeString}`, output);

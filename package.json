@@ -40,7 +40,7 @@
         "Visualization"
     ],
     "activationEvents": [
-        "*"
+        "onNotebook:*"
     ],
     "main": "./out/extension_renderer/index.js",
     "contributes": {
@@ -64,10 +64,6 @@
                     "application/vnd.vegalite.v3+json",
                     "application/vnd.vegalite.v4+json",
                     "application/x-nteract-model-debug+json",
-                    "image/gif",
-                    "image/png",
-                    "image/jpeg",
-                    "image/svg+xml",
                     "text/latex",
                     "text/vnd.plotly.v1+html"
                 ]
@@ -128,8 +124,8 @@
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.8",
         "@types/uuid": "^8.0.0",
-        "@types/vscode": "^1.45.0",
-        "@types/vscode-notebook-renderer": "^1.57.7",
+        "@types/vscode": "^1.60.0",
+        "@types/vscode-notebook-renderer": "^1.60.0",
         "@typescript-eslint/eslint-plugin": "^3.1.0",
         "@typescript-eslint/parser": "^3.1.0",
         "cache-loader": "^4.1.0",
