@@ -7,7 +7,6 @@
         "vscode": "^1.61.0"
     },
     "publisher": "ms-toolsai",
-    "enableProposedApi": true,
     "author": {
         "name": "Microsoft Corporation"
     },
