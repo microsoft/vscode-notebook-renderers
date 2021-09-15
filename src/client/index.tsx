@@ -20,7 +20,7 @@ import { CellOutput } from './render';
 import { ActivationFunction, OutputItem, RendererContext } from 'vscode-notebook-renderer';
 
 export const activate: ActivationFunction = (ctx: RendererContext<unknown>) => {
-    console.log('Jupyter Notebook Image Renderer activated');
+    console.log('Jupyter Notebook Renderer activated');
     return {
         renderOutputItem(outputItem: OutputItem, element: HTMLElement) {
             renderOutput(outputItem, element, ctx);
