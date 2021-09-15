@@ -36,7 +36,7 @@ function renderOutput(outputItem: OutputItem, element: HTMLElement, ctx: Rendere
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mimeString = outputItem.mime || (outputItem as any).mimeType;
     try {
-        if (!ctx.workspace.isTrusted && outputItem.mime !== 'image/png' && outputItem.mime !== 'image/jpeg') {
+        if (!ctx.workspace.isTrusted) {
             return;
         }
         console.log('request', outputItem);
