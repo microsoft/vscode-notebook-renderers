@@ -4,7 +4,7 @@
     "description": "Renderers for Notebooks",
     "version": "1.0.0",
     "engines": {
-        "vscode": "^1.60.0"
+        "vscode": "^1.61.0"
     },
     "publisher": "ms-toolsai",
     "enableProposedApi": true,
