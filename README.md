@@ -1,7 +1,6 @@
 # Renderers for Jupyter Notebooks in Visual Studio Code
 
-A [Visual Studio Code](https://code.visualstudio.com/) [extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) that provides renderers for outputs of [Jupyter Notebooks](https://jupyter.org/).
-For [Jupyter Notebooks](https://jupyter.org/) support please install [Jupyter extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+A [Visual Studio Code](https://code.visualstudio.com/) extension that provides renderers for outputs of [Jupyter Notebooks](https://jupyter.org/).
 
 <img src=https://raw.githubusercontent.com/microsoft/vscode-notebook-renderers/main/images/sample.png>
 
