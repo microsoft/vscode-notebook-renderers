@@ -9,7 +9,7 @@ import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
 import { fixMarkdown } from './markdownManipulation';
 import { getTransform } from './transforms';
-import { IsJupyterExtensionInstalled } from './constants';
+import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled } from './constants';
 
 (globalThis as any).__isJupyterInstalled = false;
 export interface ICellOutputProps {
@@ -69,8 +69,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
      */
     private renderImage(mimeType: string, data: Blob | string, metadata: Record<string, unknown> = {}) {
         if (this.props.ctx.postMessage) {
-            const data: IsJupyterExtensionInstalled = { type: 'isJupyterExtensionInstalled' };
-            this.props.ctx.postMessage(data);
+            this.props.ctx.postMessage({ type: 'isJupyterExtensionInstalled' } as IsJupyterExtensionInstalled);
         }
         if (this.props.ctx.onDidReceiveMessage) {
             const disposable = this.props.ctx.onDidReceiveMessage((response: Partial<IsJupyterExtensionInstalled>) => {
@@ -111,19 +110,19 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const saveAs = () => {
             if (this.props.ctx.postMessage) {
                 this.props.ctx.postMessage({
-                    type: 'saveAs',
+                    type: 'saveImageAs',
                     outputId: this.props.outputId,
                     mimeType: this.props.mimeType
-                });
+                } as SaveImageAs);
             }
         };
         const openPlot = () => {
             if (this.props.ctx.postMessage) {
                 this.props.ctx.postMessage({
-                    type: 'openPlot',
+                    type: 'openImageInPlotViewer',
                     outputId: this.props.outputId,
                     mimeType: this.props.mimeType
-                });
+                } as OpenImageInPlotViewer);
             }
         };
         const onMouseOver = () => {
