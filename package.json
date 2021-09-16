@@ -38,17 +38,13 @@
         "Notebooks",
         "Visualization"
     ],
-    "activationEvents": [
-        "onNotebook:*"
-    ],
-    "main": "./out/extension_renderer/index.js",
     "contributes": {
         "notebookRenderer": [
             {
                 "id": "jupyter-notebook-renderer",
                 "entrypoint": "./out/client_renderer/renderers.js",
                 "displayName": "Jupyter Notebook Renderer",
-                "requiresMessaging": "optional",
+                "requiresMessaging": "never",
                 "mimeTypes": [
                     "application/geo+json",
                     "application/vdom.v1+json",
@@ -71,16 +67,13 @@
     },
     "scripts": {
         "vscode:prepublish": "gulp checkDependencies && npm run compile:webpack",
-        "dev": "concurrently -r npm:compile:extension:watch npm:compile:client:watch npm:compile:test:watch",
-        "compile": "npm run compile:extension && npm run compile:test && npm run compile:client",
-        "compile:extension": "tsc -p src/extension",
-        "compile:extension:watch": "tsc -p src/extension --watch",
+        "dev": "concurrently -r npm:compile:client:watch npm:compile:test:watch",
+        "compile": "npm run compile:test && npm run compile:client",
         "compile:test": "tsc -p src/test",
         "compile:test:watch": "tsc -p src/test --watch",
-        "compile:webpack": "npm run build:client && npm run build:extension",
+        "compile:webpack": "npm run build:client",
         "compile:client": "webpack --config=build/webpack/webpack.client.config.js",
         "build:client": "webpack --config=build/webpack/webpack.client.config.js --mode=production",
-        "build:extension": "webpack --config=build/webpack/webpack.extension.config.js --mode=production",
         "compile:client:watch": "webpack --config=build/webpack/webpack.client.config.js --watch",
         "lint": "eslint src --ext ts && eslint src --ext tsx && eslint build --ext js",
         "lint-format": "npx prettier 'src/**/*.ts*' --check && npx prettier 'build/**/*.js' --check",
