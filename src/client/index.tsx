@@ -12,7 +12,7 @@ const getPublicPath = () => {
 // eslint-disable-next-line prefer-const
 __webpack_public_path__ = getPublicPath();
 // This must be on top, do not change. Required by webpack.
-
+import './index.css';
 import { nbformat } from '@jupyterlab/coreutils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
