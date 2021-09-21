@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -8,8 +9,9 @@ import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
 import { fixMarkdown } from './markdownManipulation';
 import { getTransform } from './transforms';
-import './index.css';
+import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled } from './constants';
 
+(globalThis as any).__isJupyterInstalled = false;
 export interface ICellOutputProps {
     output: nbformat.IExecuteResult | nbformat.IDisplayData;
     mimeType: string;
@@ -21,10 +23,16 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly saveAsIcon: React.RefObject<HTMLButtonElement>;
     private readonly plotIcon: React.RefObject<HTMLButtonElement>;
+    private readonly disposables: {
+        dispose: () => void;
+    }[] = [];
     constructor(prop: ICellOutputProps) {
         super(prop);
         this.saveAsIcon = React.createRef<HTMLButtonElement>();
         this.plotIcon = React.createRef<HTMLButtonElement>();
+    }
+    public componentDidMount() {
+        this.disposables.forEach((d) => d.dispose());
     }
     public render() {
         const mimeBundle = this.props.output.data as nbformat.IMimeBundle; // NOSONAR
@@ -50,7 +58,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                     (data as unknown) as Blob | string,
                     this.props.output.metadata
                 );
-
             default:
                 return this.renderOutput(data, this.props.mimeType);
         }
@@ -61,27 +68,40 @@ export class CellOutput extends React.Component<ICellOutputProps> {
      * For mimetype image/svg+xml, the data type will be string.
      */
     private renderImage(mimeType: string, data: Blob | string, metadata: Record<string, unknown> = {}) {
+        if (this.props.ctx.postMessage) {
+            this.props.ctx.postMessage({ type: 'isJupyterExtensionInstalled' } as IsJupyterExtensionInstalled);
+        }
+        if (this.props.ctx.onDidReceiveMessage) {
+            const disposable = this.props.ctx.onDidReceiveMessage((response: Partial<IsJupyterExtensionInstalled>) => {
+                if (response?.type === 'isJupyterExtensionInstalled' && response.response) {
+                    (globalThis as any).__isJupyterInstalled = response.response;
+                }
+            });
+            this.disposables.push(disposable);
+        }
+
         const imgStyle: Record<string, string | number> = {};
+        const elementStyle: Record<string, string | number> = {};
         const divStyle: Record<string, string | number> = { overflow: 'scroll', position: 'relative' }; // `overflow:scroll` is the default style used by Jupyter lab.
         const imgSrc =
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as JSONObject | undefined;
         const showPlotViewer = metadata.__displayOpenPlotIcon === true;
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
-            divStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
+            elementStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
+            imgStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const imageMetadata = metadata[mimeType] as Record<string, any> | undefined;
-        if (imageMetadata) {
-            if (imageMetadata.height) {
-                imgStyle.height = imageMetadata.height;
-            }
-            if (imageMetadata.width) {
-                imgStyle.width = imageMetadata.width;
-            }
-            if (imageMetadata.unconfined === true) {
-                imgStyle.maxWidth = 'none';
-            }
+        const imageMetadata: Record<string, any> | undefined = customMetadata
+            ? (customMetadata[mimeType] as any)
+            : undefined;
+        if (imageMetadata?.height) {
+            imgStyle.height = imageMetadata.height;
+        }
+        if (imageMetadata?.width) {
+            imgStyle.width = imageMetadata.width;
+        }
+        if (imageMetadata?.unconfined === true) {
+            imgStyle.maxWidth = 'none';
         }
 
         // Hack, use same classes as used in VSCode for images (keep things as similar as possible).
@@ -90,28 +110,34 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const saveAs = () => {
             if (this.props.ctx.postMessage) {
                 this.props.ctx.postMessage({
-                    type: 'saveAs',
+                    type: 'saveImageAs',
                     outputId: this.props.outputId,
                     mimeType: this.props.mimeType
-                });
+                } as SaveImageAs);
             }
         };
         const openPlot = () => {
             if (this.props.ctx.postMessage) {
                 this.props.ctx.postMessage({
-                    type: 'openPlot',
+                    type: 'openImageInPlotViewer',
                     outputId: this.props.outputId,
                     mimeType: this.props.mimeType
-                });
+                } as OpenImageInPlotViewer);
             }
         };
         const onMouseOver = () => {
+            if (!(globalThis as any).__isJupyterInstalled) {
+                return;
+            }
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.saveAsIcon.current!.className = 'plotIcon';
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.plotIcon.current!.className = 'plotIcon';
         };
         const onMouseOut = () => {
+            if (!(globalThis as any).__isJupyterInstalled) {
+                return;
+            }
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.saveAsIcon.current!.className = 'plotIcon hidden';
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -120,7 +146,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const contents = imgSrc ? (
             <img src={imgSrc} style={imgStyle}></img>
         ) : (
-            <div className={'svgContent'} dangerouslySetInnerHTML={{ __html: data as string }} />
+            <div className={'svgContent'} style={elementStyle} dangerouslySetInnerHTML={{ __html: data as string }} />
         );
         return (
             <div className={'display'} style={divStyle} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>

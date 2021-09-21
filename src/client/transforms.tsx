@@ -78,45 +78,13 @@ const mimeTypeToImport: TransformData[] = [
         const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
         return module.SVGTransform;
     }),
-    new TransformData('image/png', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.PNGTransform;
-    }),
-    new TransformData('image/gif', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.GIFTransform;
-    }),
-    new TransformData('image/jpeg', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.JPEGTransform;
-    }),
-    new TransformData('application/json', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.JSONTransform;
-    }),
-    new TransformData('application/javascript', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.JavaScriptTransform;
-    }),
     new TransformData('application/vdom.v1+json', async () => {
         const module = await import(/* webpackChunkName: "nteract_transforms_vsdom" */ '@nteract/transform-vdom');
         return module.VDOM;
     }),
-    new TransformData('text/markdown', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.MarkdownTransform;
-    }),
     new TransformData('text/latex', async () => {
         const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
         return module.LaTeXTransform;
-    }),
-    new TransformData('text/html', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.HTMLTransform;
-    }),
-    new TransformData('text/plain', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.TextTransform;
     })
 ];
 

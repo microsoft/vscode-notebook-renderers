@@ -35,6 +35,7 @@ gulp.task('checkNpmDependencies', (done) => {
                 );
             }
         });
+        checkPackageDependencies(packages);
     }
     function checkPackageDependencies(packages) {
         Object.keys(packages).forEach((packageName) => {
@@ -45,9 +46,7 @@ gulp.task('checkNpmDependencies', (done) => {
         });
     }
 
-    checkPackageVersions(packageLock['packages']);
     checkPackageVersions(packageLock['dependencies']);
-    checkPackageDependencies(packageLock['packages']);
 
     if (errors.length > 0) {
         errors.forEach((ex) => console.error(ex));
