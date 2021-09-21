@@ -146,7 +146,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const contents = imgSrc ? (
             <img src={imgSrc} style={imgStyle}></img>
         ) : (
-            <div className={'svgContent'} style={elementStyle} dangerouslySetInnerHTML={{ __html: data as string }} />
+            <div style={elementStyle} dangerouslySetInnerHTML={{ __html: data as string }} />
         );
         return (
             <div className={'display'} style={divStyle} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
