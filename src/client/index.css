@@ -9,3 +9,6 @@
 .plotIcon {
     cursor: pointer;
 }
+.svgContainerStyle svg {
+    background-color: white;
+}

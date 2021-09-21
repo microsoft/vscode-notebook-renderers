@@ -21,19 +21,29 @@ export async function activate(
                 return;
             }
             if (msg.type === 'isJupyterExtensionInstalled') {
-                const isJupyterExtAvailable = extensions.getExtension('ms-toolsai.jupyter');
-                void messaging.postMessage(
-                    <IsJupyterExtensionInstalled>{
-                        type: 'isJupyterExtensionInstalled',
-                        response: isJupyterExtAvailable
-                    },
-                    editor
-                );
+                void messaging
+                    .postMessage(
+                        <IsJupyterExtensionInstalled>{
+                            type: 'isJupyterExtensionInstalled',
+                            response: !!extensions.getExtension('ms-toolsai.jupyter')
+                        },
+                        editor
+                    )
+                    .then(
+                        (fulfilled) => {
+                            console.log('Sent to UI', fulfilled);
+                        },
+                        (ex) => console.error('Failed to send', ex)
+                    );
                 return;
             }
             onDidReceiveMessage.fire({ editor, message: msg });
         })
     );
+    messaging.postMessage(<IsJupyterExtensionInstalled>{
+        type: 'isJupyterExtensionInstalled',
+        response: !!extensions.getExtension('ms-toolsai.jupyter')
+    });
 
     return {
         onDidReceiveMessage: onDidReceiveMessage.event
