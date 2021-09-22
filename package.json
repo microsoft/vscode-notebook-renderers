@@ -1,7 +1,7 @@
 {
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
-    "description": "Renderers for Jupyter Notebooks",
+    "description": "Renderers for Jupyter Notebooks (with plotly, vega, latex, gif, png, svg, jpeg and other such outputs)",
     "version": "1.0.0",
     "engines": {
         "vscode": "^1.61.0"
