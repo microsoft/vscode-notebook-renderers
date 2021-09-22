@@ -29,6 +29,7 @@
     "keywords": [
         "jupyter",
         "notebook",
+        "notebookRenderer",
         "multi-root ready"
     ],
     "categories": [
