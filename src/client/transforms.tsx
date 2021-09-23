@@ -82,10 +82,6 @@ const mimeTypeToImport: TransformData[] = [
         const module = await import(/* webpackChunkName: "nteract_transforms_vsdom" */ '@nteract/transform-vdom');
         return module.VDOM;
     }),
-    new TransformData('text/latex', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.LaTeXTransform;
-    })
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
