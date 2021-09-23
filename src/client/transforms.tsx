@@ -81,10 +81,6 @@ const mimeTypeToImport: TransformData[] = [
     new TransformData('application/vdom.v1+json', async () => {
         const module = await import(/* webpackChunkName: "nteract_transforms_vsdom" */ '@nteract/transform-vdom');
         return module.VDOM;
-    }),
-    new TransformData('text/latex', async () => {
-        const module = await import(/* webpackChunkName: "nteract_transforms" */ '@nteract/transforms');
-        return module.LaTeXTransform;
     })
 ];
 
