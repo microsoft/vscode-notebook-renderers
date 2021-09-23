@@ -81,7 +81,7 @@ const mimeTypeToImport: TransformData[] = [
     new TransformData('application/vdom.v1+json', async () => {
         const module = await import(/* webpackChunkName: "nteract_transforms_vsdom" */ '@nteract/transform-vdom');
         return module.VDOM;
-    }),
+    })
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
