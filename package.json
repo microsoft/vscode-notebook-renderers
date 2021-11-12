@@ -111,7 +111,7 @@
         "@phosphor/widgets": "^1.9.3",
         "lodash": "^4.17.21",
         "path-browserify": "^0.0.1",
-        "plotly.js-dist": "^2.2.0",
+        "plotly.js-dist": "^2.6.3",
         "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
