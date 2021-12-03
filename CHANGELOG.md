@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5
+* Updated to use Plotly version 2.7.0
+
+## 1.0.4
+* Updated to use Plotly version 2.6.4
+
 ### Thanks
 
 Thanks to the following projects which we fully rely on to provide some of
