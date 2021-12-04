@@ -2,7 +2,7 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, latex, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "engines": {
         "vscode": "^1.61.0"
     },
@@ -111,7 +111,7 @@
         "@phosphor/widgets": "^1.9.3",
         "lodash": "^4.17.21",
         "path-browserify": "^0.0.1",
-        "plotly.js-dist": "^2.6.4",
+        "plotly.js-dist": "^2.7.0",
         "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
