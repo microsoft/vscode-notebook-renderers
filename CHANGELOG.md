@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.6
+* Removed rendering of text/latex in favor of built-in support.
+
 ## 1.0.5
 * Updated to use Plotly version 2.7.0
 
