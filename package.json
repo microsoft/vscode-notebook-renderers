@@ -1,10 +1,10 @@
 {
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
-    "description": "Renderers for Jupyter Notebooks (with plotly, vega, latex, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.5",
+    "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
+    "version": "1.0.6",
     "engines": {
-        "vscode": "^1.61.0"
+        "vscode": "^1.64.0"
     },
     "publisher": "ms-toolsai",
     "author": {
@@ -69,7 +69,6 @@
                     "application/vnd.vegalite.v3+json",
                     "application/vnd.vegalite.v4+json",
                     "application/x-nteract-model-debug+json",
-                    "text/latex",
                     "text/vnd.plotly.v1+html"
                 ]
             }

@@ -7,7 +7,6 @@ import type { JSONObject } from '@phosphor/coreutils';
 import * as React from 'react';
 import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
-import { fixMarkdown } from './markdownManipulation';
 import { getTransform } from './transforms';
 import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled } from './constants';
 
@@ -47,8 +46,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         }
 
         switch (this.props.mimeType) {
-            case 'text/latex':
-                return this.renderLatex(data);
             case 'image/svg+xml':
             case 'image/png':
             case 'image/gif':
@@ -227,11 +224,6 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                 <Transform data={data} onError={console.error} />
             </div>
         );
-    }
-    private renderLatex(data: nbformat.MultilineString | JSONObject) {
-        // Fixup latex to make sure it has the requisite $$ around it
-        data = fixMarkdown(concatMultilineString(data as nbformat.MultilineString, true), true);
-        return this.renderOutput(data);
     }
 }
 
