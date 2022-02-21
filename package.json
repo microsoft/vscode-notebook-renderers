@@ -148,7 +148,6 @@
         "less": "^3.11.3",
         "mocha": "^7.2.0",
         "node-loader": "^2.0.0",
-        "npm": "^6.14.5",
         "npm-force-resolutions": "0.0.10",
         "prettier": "^2.0.5",
         "string-replace-webpack-plugin": "^0.1.3",
