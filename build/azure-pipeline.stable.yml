@@ -20,5 +20,11 @@ extends:
       - script: npm ci
         displayName: Install dependencies
 
+      - bash: npm run lint
+        displayName: 'Lint'
+
+      - bash: npm run lint-format
+        displayName: 'Code Format'
+
       - script: npm run compile
         displayName: Compile
