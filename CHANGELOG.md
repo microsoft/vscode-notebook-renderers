@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7
+* Updates to the build pipeline.
+
 ## 1.0.6
 * Removed rendering of text/latex in favor of built-in support.
 
