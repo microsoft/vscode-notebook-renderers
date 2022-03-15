@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.0.7
+* Update plotly to version 2.11.1
 * Update npm packages.
 
 ## 1.0.6
