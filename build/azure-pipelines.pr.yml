@@ -1,5 +1,14 @@
+# Notes: Only trigger a PR build for main and release, and skip build/rebuild
+#        on changes in the news and .vscode folders.
+pr:
+  autoCancel: true
+  branches:
+    include: ['main', 'release/*']
+  paths:
+    exclude: ['/.vscode']
+
+# Not the CI build for merges to main and release.
 trigger: none
-pr: none
 
 resources:
   repositories:
@@ -12,7 +21,6 @@ resources:
 extends:
   template: azure-pipelines/extension/stable.yml@templates
   parameters:
-    publishExtension: true
     buildSteps:
       - script: npm ci
         displayName: Install dependencies
