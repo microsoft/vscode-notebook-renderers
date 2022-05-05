@@ -172,5 +172,9 @@
         "minimist": "1.2.6",
         "moment": "2.29.2",
         "ansi-regex": "3.0.1"
+    },
+    "overrides": {
+        "simple-get": "3.1.1",
+        "url-parse": "1.5.8"
     }
 }
