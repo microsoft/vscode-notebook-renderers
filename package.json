@@ -76,8 +76,8 @@
     },
     "scripts": {
         "vscode:prepublish": "gulp checkDependencies && npm run compile:webpack",
-        "dev": "concurrently -r npm:compile:extension:watch npm:compile:client:watch npm:compile:test:watch",
-        "compile": "npm run compile:extension && npm run compile:test && npm run compile:client",
+        "dev": "concurrently -r npm:compile:extension:watch npm:compile:client:watch",
+        "compile": "npm run compile:extension && npm run compile:client",
         "compile:extension": "tsc -p src/extension",
         "compile:extension:watch": "tsc -p src/extension --watch",
         "compile:webpack": "npm run build:client && npm run build:extension",
