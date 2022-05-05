@@ -173,6 +173,6 @@
         "url-parse": "1.5.8",
         "minimist": "1.2.6",
         "moment": "2.29.2",
-        "ansi-regex": ">=3.0.1"
+        "ansi-regex": "3.0.1"
     }
 }
