@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-import type { nbformat } from '@jupyterlab/coreutils/lib/nbformat';
+import * as nbformat from '@jupyterlab/nbformat';
 
 export function concatMultilineString(str: nbformat.MultilineString, trim?: boolean): string {
     const nonLineFeedWhiteSpaceTrim = /(^[\t\f\v\r ]+|[\t\f\v\r ]+$)/g; // Local var so don't have to reset the lastIndex.
