@@ -3,7 +3,8 @@
 // Licensed under the MIT License.
 
 import type * as nbformat from '@jupyterlab/nbformat';
-import type { JSONObject } from '@lumino/coreutils';
+import type { JSONObject, PartialJSONObject } from '@lumino/coreutils';
+
 import * as React from 'react';
 import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
@@ -36,7 +37,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     public render() {
         const mimeBundle = this.props.output.data as nbformat.IMimeBundle; // NOSONAR
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        let data: nbformat.MultilineString | JSONObject = mimeBundle[this.props.mimeType!];
+        let data: nbformat.MultilineString | PartialJSONObject = mimeBundle[this.props.mimeType!];
 
         // For un-executed output we might get text or svg output as multiline string arrays
         // we want to concat those so we don't display a bunch of weird commas as we expect
@@ -80,7 +81,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const imgStyle: Record<string, string | number> = {};
         const divStyle: Record<string, string | number> = { overflow: 'scroll', position: 'relative' }; // `overflow:scroll` is the default style used by Jupyter lab.
         const imgSrc =
-            mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
+            mimeType.toLowerCase().includes('svg') || typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as JSONObject | undefined;
         const showPlotViewer = metadata.__displayOpenPlotIcon === true;
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
@@ -207,7 +208,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             </div>
         );
     }
-    private renderOutput(data: nbformat.MultilineString | JSONObject, mimeType?: string) {
+    private renderOutput(data: nbformat.MultilineString | PartialJSONObject, mimeType?: string) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-explicit-any
         const Transform: any = getTransform(this.props.mimeType!);
         const vegaPlot = mimeType && isVegaPlot(mimeType);
