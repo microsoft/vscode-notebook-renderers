@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import type { nbformat } from '@jupyterlab/coreutils';
-import type { JSONObject } from '@phosphor/coreutils';
+import type * as nbformat from '@jupyterlab/nbformat';
+import type { JSONObject } from '@lumino/coreutils';
 import * as React from 'react';
 import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
