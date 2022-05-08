@@ -4,9 +4,7 @@
 import { Event, EventEmitter, ExtensionContext, notebooks, extensions, NotebookEditor } from 'vscode';
 import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled } from './constants';
 
-export async function activate(
-    context: ExtensionContext
-): Promise<{
+export async function activate(context: ExtensionContext): Promise<{
     onDidReceiveMessage: Event<{ editor: NotebookEditor; message: OpenImageInPlotViewer | SaveImageAs }>;
 }> {
     const onDidReceiveMessage = new EventEmitter<{

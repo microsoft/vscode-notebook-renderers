@@ -53,7 +53,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             case 'image/jpeg':
                 return this.renderImage(
                     this.props.mimeType,
-                    (data as unknown) as Blob | string,
+                    data as unknown as Blob | string,
                     this.props.output.metadata
                 );
             default:
