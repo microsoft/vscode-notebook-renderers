@@ -29,10 +29,13 @@ module.exports = {
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
     plugins: [
         new ForkTsCheckerWebpackPlugin({
-            checkSyntacticErrors: true,
-            tsconfig: configFileName,
-            reportFiles: ['src/client/**/*.{ts,tsx}'],
-            memoryLimit: 9096
+            typescript: {
+                diagnosticOptions: {
+                    syntactic: true
+                },
+                configFile: configFileName,
+                memoryLimit: 9096
+            }
         }),
         new DefinePlugin({
             scriptUrl: 'import.meta.url',
