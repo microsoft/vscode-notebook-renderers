@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import type { nbformat } from '@jupyterlab/coreutils';
-import type { JSONObject } from '@phosphor/coreutils';
+import type * as nbformat from '@jupyterlab/nbformat';
+import type { PartialJSONObject } from '@lumino/coreutils';
 import * as React from 'react';
 import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
@@ -36,7 +36,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     public render() {
         const mimeBundle = this.props.output.data as nbformat.IMimeBundle; // NOSONAR
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        let data: nbformat.MultilineString | JSONObject = mimeBundle[this.props.mimeType!];
+        let data = mimeBundle[this.props.mimeType!];
 
         // For un-executed output we might get text or svg output as multiline string arrays
         // we want to concat those so we don't display a bunch of weird commas as we expect
@@ -52,7 +52,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             case 'image/jpeg':
                 return this.renderImage(
                     this.props.mimeType,
-                    (data as unknown) as Blob | string,
+                    (data as unknown) as Blob | MediaSource,
                     this.props.output.metadata
                 );
             default:
@@ -64,7 +64,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
      * Behavior adopted from Jupyter lab.
      * For mimetype image/svg+xml, the data type will be string.
      */
-    private renderImage(mimeType: string, data: Blob | string, metadata: Record<string, unknown> = {}) {
+    private renderImage(mimeType: string, data: Blob | MediaSource, metadata: Record<string, unknown> = {}) {
         if (this.props.ctx.postMessage) {
             this.props.ctx.postMessage({ type: 'isJupyterExtensionInstalled' } as IsJupyterExtensionInstalled);
         }
@@ -81,7 +81,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const divStyle: Record<string, string | number> = { overflow: 'scroll', position: 'relative' }; // `overflow:scroll` is the default style used by Jupyter lab.
         const imgSrc =
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
-        const customMetadata = metadata.metadata as JSONObject | undefined;
+        const customMetadata = metadata.metadata as PartialJSONObject | undefined;
         const showPlotViewer = metadata.__displayOpenPlotIcon === true;
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
             imgStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
@@ -143,7 +143,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         const contents = imgSrc ? (
             <img src={imgSrc} style={imgStyle}></img>
         ) : (
-            <div className={'svgContainerStyle'} dangerouslySetInnerHTML={{ __html: data as string }} />
+            <div className={'svgContainerStyle'} dangerouslySetInnerHTML={{ __html: data.toString() }} />
         );
         return (
             <div className={'display'} style={divStyle} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
@@ -207,7 +207,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             </div>
         );
     }
-    private renderOutput(data: nbformat.MultilineString | JSONObject, mimeType?: string) {
+    private renderOutput(data: nbformat.MultilineString | PartialJSONObject, mimeType?: string) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-explicit-any
         const Transform: any = getTransform(this.props.mimeType!);
         const vegaPlot = mimeType && isVegaPlot(mimeType);
