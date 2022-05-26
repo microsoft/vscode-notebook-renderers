@@ -125,6 +125,7 @@
         "react-syntax-highlighter": "^15.5.0",
         "strip-ansi": "^5.2.0",
         "styled-components": "5.2.1",
+        "tar": "^4.4.18",
         "trim": "^0.0.3",
         "tslib": "^1.10.0",
         "underscore": "^1.13.1",
