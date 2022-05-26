@@ -112,7 +112,11 @@
         "@nteract/transform-vega": "7.0.10",
         "@nteract/transforms": "^3.2.0",
         "@phosphor/widgets": "^1.9.3",
+        "chownr": "^2.0.0",
+        "fs-minipass": "^2.1.0",
         "lodash": "^4.17.21",
+        "minipass": "^3.1.6",
+        "minizlib": "^2.1.2",
         "path-browserify": "^0.0.1",
         "plotly.js-dist": "^2.11.1",
         "re-resizable": "~6.5.5",
@@ -126,7 +130,8 @@
         "underscore": "^1.13.1",
         "url-parse": "^1.5.8",
         "util": "^0.12.3",
-        "uuid": "^3.3.2"
+        "uuid": "^3.3.2",
+        "yallist": "^4.0.0"
     },
     "devDependencies": {
         "@types/glob": "^7.1.1",
