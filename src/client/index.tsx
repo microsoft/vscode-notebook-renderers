@@ -13,7 +13,7 @@ const getPublicPath = () => {
 __webpack_public_path__ = getPublicPath();
 // This must be on top, do not change. Required by webpack.
 import './index.css';
-import { nbformat } from '@jupyterlab/coreutils';
+import type * as nbformat from '@jupyterlab/nbformat';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { CellOutput } from './render';

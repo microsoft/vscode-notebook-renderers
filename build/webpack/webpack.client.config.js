@@ -7,7 +7,6 @@ const constants = require('../constants');
 const configFileName = 'src/client/tsconfig.json';
 const { DefinePlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const StringReplacePlugin = require('string-replace-webpack-plugin');
 // Any build on the CI is considered production mode.
 const isProdBuild = constants.isCI || process.argv.some((argv) => argv.includes('mode') && argv.includes('production'));
 
@@ -38,7 +37,6 @@ module.exports = {
             scriptUrl: 'import.meta.url',
             'process.env': '{}' // utils references `process.env.xxx`
         }),
-        new StringReplacePlugin(),
         ...common.getDefaultPlugins('extension')
     ],
     stats: {
@@ -60,7 +58,6 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 use: [
-                    { loader: 'cache-loader' },
                     {
                         loader: 'thread-loader',
                         options: {
@@ -129,26 +126,6 @@ module.exports = {
                 use: [
                     {
                         loader: 'node-loader'
-                    }
-                ]
-            },
-            {
-                test: /plotly\.js$/,
-                use: [
-                    {
-                        // https://github.com/plotly/plotly.js/issues/3518#issuecomment-779758848
-                        // Plotly bundle doesn't work under ES6 import. Using the work around (minified version)
-                        // from the link above
-                        loader: StringReplacePlugin.replace({
-                            replacements: [
-                                {
-                                    pattern: /module.exports = d3; else this.d3 = d3;\n}\(\);/,
-                                    replacement: function () {
-                                        return 'module.exports = d3; else this.d3 = d3;\n}.apply(self);';
-                                    }
-                                }
-                            ]
-                        })
                     }
                 ]
             }
