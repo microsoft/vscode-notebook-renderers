@@ -23,12 +23,12 @@ function fixPlotlyRenderer() {
         `return { data, layout };`
     ];
     const textsToReplaceWith = [
-        `this.Plotly.newPlot(this.plotDiv, figure);`,
+        `this.Plotly.newPlot(this.plotDiv, figure); //Replaced by postinstall`,
         `const { data = {}, layout = {}, frames = {}, config = {} } = figure;`,
         `return { data, layout, config, frames };`
     ];
     const fileContents = fs.readFileSync(filePath, 'utf8').toString();
-    if (fileContents.indexOf(textsToReplace[0]) === -1) {
+    if (fileContents.indexOf(textsToReplace[0]) === -1 && fileContents.indexOf(textsToReplaceWith[0]) === -1) {
         throw new Error('Unable to find plotly fixup');
     }
     let replacedFileContents = fileContents;
