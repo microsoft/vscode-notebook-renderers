@@ -44,7 +44,7 @@ function renderOutput(outputItem: OutputItem, element: HTMLElement, ctx: Rendere
         console.log(`Rendering mimeType ${mimeString}`, output);
 
         ReactDOM.render(
-            React.createElement(CellOutput, { mimeType: mimeString, output, ctx, outputId: outputItem.id }, null),
+            React.createElement(CellOutput, { mimeType: mimeString, output, ctx, outputId: (outputItem.metadata as any)?.id || outputItem.id }, null),
             element
         );
     } catch (ex) {
