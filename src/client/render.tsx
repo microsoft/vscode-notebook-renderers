@@ -9,6 +9,7 @@ import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
 import { getTransform } from './transforms';
 import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled } from './constants';
+import { noop } from 'underscore';
 
 (globalThis as any).__isJupyterInstalled = false;
 export interface ICellOutputProps {
@@ -22,6 +23,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly saveAsIcon: React.RefObject<HTMLButtonElement>;
     private readonly plotIcon: React.RefObject<HTMLButtonElement>;
+    private readonly copyImageIcon: React.RefObject<HTMLButtonElement>;
     private readonly disposables: {
         dispose: () => void;
     }[] = [];
@@ -29,6 +31,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         super(prop);
         this.saveAsIcon = React.createRef<HTMLButtonElement>();
         this.plotIcon = React.createRef<HTMLButtonElement>();
+        this.copyImageIcon = React.createRef<HTMLButtonElement>();
     }
     public componentWillUnmount() {
         this.disposables.forEach((d) => d.dispose());
@@ -83,6 +86,8 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as PartialJSONObject | undefined;
         const showPlotViewer = metadata.__displayOpenPlotIcon === true;
+        const showCopyImage = mimeType === 'image/png' && 'write' in navigator.clipboard;
+        const copyButtonMargin = showPlotViewer ? '85px' : '45px';
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
             imgStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
         }
@@ -120,6 +125,10 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                 } as OpenImageInPlotViewer);
             }
         };
+        const copyPlotImage = () => {
+            const item = new ClipboardItem({ [mimeType]: data as Blob });
+            navigator.clipboard.write([item]).then(noop);
+        };
         const onMouseOver = () => {
             if (!(globalThis as any).__isJupyterInstalled) {
                 return;
@@ -128,6 +137,9 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             this.saveAsIcon.current!.className = 'plotIcon';
             if (this.plotIcon.current) {
                 this.plotIcon.current.className = 'plotIcon';
+            }
+            if (this.copyImageIcon.current) {
+                this.copyImageIcon.current.className = 'plotIcon';
             }
         };
         const onMouseOut = () => {
@@ -138,6 +150,9 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             this.saveAsIcon.current!.className = 'plotIcon hidden';
             if (this.plotIcon.current) {
                 this.plotIcon.current.className = 'plotIcon hidden';
+            }
+            if (this.copyImageIcon.current) {
+                this.copyImageIcon.current.className = 'plotIcon hidden';
             }
         };
         const contents = imgSrc ? (
@@ -198,6 +213,36 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                                         className={'plotIconSvgPath'}
                                         d="M9.71429 6.28571V12.2857H7.14286V6.28571H9.71429ZM13.1429 2.85714V12.2857H10.5714V2.85714H13.1429ZM2.85714 13.1429H14V14H2V2H2.85714V13.1429ZM6.28571 4.57143V12.2857H3.71429V4.57143H6.28571Z"
                                     />
+                                </svg>
+                            </span>
+                        </span>
+                    </button>
+                ) : undefined}
+                {showCopyImage ? (
+                    <button
+                        ref={this.copyImageIcon}
+                        style={{ position: 'absolute', top: '5px', right: copyButtonMargin }}
+                        className={'plotIcon hidden'}
+                        onClick={copyPlotImage}
+                        role="button"
+                        aria-pressed="false"
+                        title="copy to clipboard"
+                        aria-label="copy to clipboard"
+                    >
+                        <span>
+                            <span className="image-button-child">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        className={'plotIconSvgPath'}
+                                        d="m4 4l1-1h5.414L14 6.586V14l-1 1H5l-1-1V4zm9 3l-3-3H5v10h8V7z"
+                                    />
+                                    <path className={'plotIconSvgPath'} d="M3 1L2 2v10l1 1V2h6.414l-1-1H3z" />
                                 </svg>
                             </span>
                         </span>
