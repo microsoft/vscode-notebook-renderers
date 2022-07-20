@@ -8,8 +8,8 @@ import * as React from 'react';
 import type { RendererContext } from 'vscode-notebook-renderer';
 import { concatMultilineString } from './helpers';
 import { getTransform } from './transforms';
-import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled } from './constants';
-import { noop } from 'underscore';
+import { OpenImageInPlotViewer, SaveImageAs, IsJupyterExtensionInstalled, noop } from './constants';
+import { writeImageToClipboard } from './clipboard';
 
 (globalThis as any).__isJupyterInstalled = false;
 export interface ICellOutputProps {
@@ -86,7 +86,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as PartialJSONObject | undefined;
         const showPlotViewer = metadata.__displayOpenPlotIcon === true;
-        const showCopyImage = mimeType === 'image/png' && 'write' in navigator.clipboard;
+        const showCopyImage = mimeType === 'image/png';
         const copyButtonMargin = showPlotViewer ? '85px' : '45px';
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
             imgStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
@@ -126,8 +126,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             }
         };
         const copyPlotImage = () => {
-            const item = new ClipboardItem({ [mimeType]: data as Blob });
-            navigator.clipboard.write([item]).then(noop);
+            writeImageToClipboard(data as Blob).then(noop);
         };
         const onMouseOver = () => {
             if (!(globalThis as any).__isJupyterInstalled) {

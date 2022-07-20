@@ -16,3 +16,12 @@ export type SaveImageAs = {
     outputId: string;
     mimeType: string;
 };
+export declare const ClipboardItem: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    prototype: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new (options: any): any;
+};
+export const noop = () => {
+    // noop
+};
