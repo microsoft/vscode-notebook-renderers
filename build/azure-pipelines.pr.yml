@@ -22,6 +22,12 @@ extends:
   template: azure-pipelines/extension/stable.yml@templates
   parameters:
     buildSteps:
+      - bash: node --version
+        displayName: 'Node Version'
+
+      - bash: npm --version
+        displayName: 'npm Version'
+
       - script: npm ci
         displayName: Install dependencies
 
