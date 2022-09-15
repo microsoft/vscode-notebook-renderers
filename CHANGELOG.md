@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.10
+* Add support for VegaLite 5.
+* Fixes to rendering of Vega 5, VegaLite 3 and VegaLite 4.
+* Fixes to rendering of JavaScript mime types to ensure the right variables are available and right context is setup.
+* Ensure `jQuery` is available when rendering JavaScript mime types.
+
 ## 1.0.7
 * Update plotly to version 2.11.1
 * Update npm packages.

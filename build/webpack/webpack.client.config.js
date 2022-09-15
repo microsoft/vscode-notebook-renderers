@@ -13,7 +13,9 @@ const isProdBuild = constants.isCI || process.argv.some((argv) => argv.includes(
 module.exports = {
     context: constants.ExtensionRootDir,
     entry: {
-        renderers: './src/client/index.tsx'
+        renderers: './src/client/index.tsx',
+        javascriptRenderer: './src/client/javascriptRenderer.ts',
+        vegaRenderer: './src/client/vegaRenderer.ts'
     },
     output: {
         path: path.join(constants.ExtensionRootDir, 'out', 'client_renderer'),
