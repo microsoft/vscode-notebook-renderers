@@ -15,8 +15,11 @@ __webpack_public_path__ = getPublicPath();
 import type { OutputItem, RendererContext } from 'vscode-notebook-renderer';
 if (!('$' in globalThis) && !('jQuery' in globalThis)) {
     // Required by JS code.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const jQuery = require('jquery');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (globalThis as any).$ = jQuery;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (globalThis as any).jQuery = jQuery;
 }
 export async function activate(ctx: RendererContext<void>) {
@@ -42,8 +45,6 @@ export async function activate(ctx: RendererContext<void>) {
                         ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           (outputItem.metadata as any)['metadata']
                         : undefined;
-                // Old VS Code api didn't pass the element, hence we need to use the old way of getting the script.
-                script = typeof element === 'string' ? element : script;
                 return `
                 (function(){
                     let gotToUserScript = false;
@@ -56,9 +57,7 @@ export async function activate(ctx: RendererContext<void>) {
                             }],
                         };
                         // Required by JS code in Jupyter notebook renderers again, even scenepic (Microsoft Python widget) uses this.
-                        const ele = typeof element === 'Object' ? $(document.getElementById("${
-                            element.id
-                        }")) : undefined;
+                        const ele = $(document.getElementById("${element.id}"));
                         (function (element){
                             gotToUserScript = true;
                             ${script}
