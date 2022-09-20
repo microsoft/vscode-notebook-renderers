@@ -24,13 +24,21 @@ if (!('$' in globalThis) && !('jQuery' in globalThis)) {
 }
 export async function activate(ctx: RendererContext<void>) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const jsRenderer = await ctx.getRenderer('vscode.builtin-renderer');
-    if (!jsRenderer) {
+    const builtinRenderer = await ctx.getRenderer('vscode.builtin-renderer');
+    if (!builtinRenderer) {
         throw new Error('Could not find the built-in js renderer');
     }
     try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (jsRenderer.experimental_registerJavaScriptRenderingHook as any)({
+        (builtinRenderer.experimental_registerHtmlRenderingHook as any)({
+            async postRender(_outputItem: OutputItem, element: HTMLElement, _signal: AbortSignal): Promise<undefined> {
+                // Output container is expected to have the class `output_html`
+                element.classList.add('output_html');
+                return;
+            }
+        });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (builtinRenderer.experimental_registerJavaScriptRenderingHook as any)({
             async preEvaluate(
                 outputItem: OutputItem,
                 element: HTMLElement,
