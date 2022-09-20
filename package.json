@@ -70,12 +70,12 @@
                 ]
             },
             {
-                "id": "jupyter-notebook-js-renderer",
-                "displayName": "Jupyter Notebook JS Renderer",
+                "id": "jupyter-notebook-built-in-renderer-hooks",
+                "displayName": "Jupyter Notebook Html/JavaScript Renderer",
                 "requiresMessaging": "optional",
                 "entrypoint": {
                     "extends": "vscode.builtin-renderer",
-                    "path": "./out/client_renderer/javascriptRenderer.js"
+                    "path": "./out/client_renderer/builtinRendererHooks.js"
                 }
             },
             {

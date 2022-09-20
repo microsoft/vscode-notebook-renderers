@@ -14,7 +14,7 @@ module.exports = {
     context: constants.ExtensionRootDir,
     entry: {
         renderers: './src/client/index.tsx',
-        javascriptRenderer: './src/client/javascriptRenderer.ts',
+        builtinRendererHooks: './src/client/builtinRendererHooks.ts',
         vegaRenderer: './src/client/vegaRenderer.ts'
     },
     output: {
