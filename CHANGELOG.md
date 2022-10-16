@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.11
+* Ship jQuery and requirejs as pre-load scripts so that all outputs have access to these scripts.
+
 ## 1.0.10
 * Add support for VegaLite 5.
 * Fixes to rendering of Vega 5, VegaLite 3 and VegaLite 4.

@@ -2,9 +2,9 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "engines": {
-        "vscode": "^1.72.0-insider"
+        "vscode": "^1.73.0-insider"
     },
     "publisher": "ms-toolsai",
     "author": {
@@ -19,7 +19,6 @@
     "bugs": {
         "url": "https://github.com/Microsoft/vscode-notebook-renderers/issues"
     },
-    "preview": true,
     "qna": "https://stackoverflow.com/questions/tagged/visual-studio-code+jupyter",
     "icon": "icon.png",
     "galleryBanner": {
@@ -42,9 +41,22 @@
     "activationEvents": [
         "onNotebook:*"
     ],
+    "enabledApiProposals": [
+        "contribNotebookStaticPreloads"
+    ],
     "main": "./out/extension_renderer/index.js",
     "browser": "./out/extension_renderer/index.js",
     "contributes": {
+        "notebookPreload": [
+            {
+                "type": "jupyter-notebook",
+                "entrypoint": "./out/client_renderer/preload.js"
+            },
+            {
+                "type": "interactive",
+                "entrypoint": "./out/client_renderer/preload.js"
+            }
+        ],
         "notebookRenderer": [
             {
                 "id": "jupyter-notebook-renderer",
@@ -143,6 +155,7 @@
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
         "react-toggle": "^4.1.2",
+        "requirejs": "^2.3.6",
         "styled-components": "5.2.1",
         "tslib": "^1.14.1",
         "underscore": "^1.13.1",
