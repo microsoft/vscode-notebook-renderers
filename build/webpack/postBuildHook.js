@@ -18,12 +18,10 @@ class PostBuildHookWebpackPlugin {
                     throw new Error('Unable to update require.js');
                 }
                 // Ensure jQuery, require and define are globally available.
-                const declarations = [
-                    'globalThis.require = require;',
-                    'globalThis.define = define;',
-                    'globalThis.$ = $;'
-                ];
-                requireFileContents = `${requireFileContents.replace(undefDeclaration, fixedUndefDeclaration)}\n\n`;
+                const declarations = ['globalThis.$ = $;'];
+                requireFileContents = `${requireFileContents
+                    .replace(invocationDeclaration, fixedInvocationDeclaration)
+                    .replace(undefDeclaration, fixedUndefDeclaration)}\n\n`;
                 const newContents = `${requireFileContents}\n\n\n${fs.readFileSync(jqueryFile).toString()}\n\n\n${fs
                     .readFileSync(file)
                     .toString()}\n\n\n${declarations.join('\n')}`;
@@ -33,6 +31,8 @@ class PostBuildHookWebpackPlugin {
     }
 }
 
+const invocationDeclaration = `}(this, (typeof setTimeout === 'undefined' ? undefined : setTimeout)));`;
+const fixedInvocationDeclaration = `}(globalThis, (typeof setTimeout === 'undefined' ? undefined : setTimeout)));`;
 const undefDeclaration = `                    localRequire.undef = function (id) {
                         //Bind any waiting define() calls to this context,
                         //fix for #408
