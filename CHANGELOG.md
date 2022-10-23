@@ -1,8 +1,5 @@
 # Changelog
 
-## 1.1.0
-* Update version number to 1.1.0.
-
 ## 1.0.11
 * Ship jQuery and requirejs as pre-load scripts so that all outputs have access to these scripts.
 
