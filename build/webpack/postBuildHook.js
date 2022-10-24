@@ -18,7 +18,11 @@ class PostBuildHookWebpackPlugin {
                     throw new Error('Unable to update require.js');
                 }
                 // Ensure jQuery, require and define are globally available.
-                const declarations = ['globalThis.$ = $;'];
+                const declarations = [
+                    'globalThis.$ = $;',
+                    'window.$ = $;',
+                    'window.require=window.requirejs=requirejs; window.define=define;'
+                ];
                 requireFileContents = `${requireFileContents
                     .replace(invocationDeclaration, fixedInvocationDeclaration)
                     .replace(undefDeclaration, fixedUndefDeclaration)}\n\n`;
@@ -106,7 +110,7 @@ const fixedUndefDeclaration = `                    localRequire.undef = function
                             cleanRegistry(id);
                         }
                         } catch (e) {
-                          console.error('require.undef in Notebook Renderer failed', id, e);
+                          console.warn('require.undef in Notebook Renderer failed', id, e);
                         }
                     };`;
 
