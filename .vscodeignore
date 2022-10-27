@@ -5,6 +5,7 @@ build/**
 out/test/**
 src/**
 .gitignore
+.nvmrc
 node_modules
 vsc-extension-quickstart.md
 **/tsconfig.json

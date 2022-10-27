@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.11
+## 1.0.12
 * Ship jQuery and requirejs as pre-load scripts so that all outputs have access to these scripts.
 
 ## 1.0.10
