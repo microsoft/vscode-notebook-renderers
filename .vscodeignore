@@ -17,4 +17,4 @@ vsc-extension-quickstart.md
 **/*.ts
 **/*.stats.json
 **/*.analyzer.html
-**/*.bundle.js.map
+**/*.map
