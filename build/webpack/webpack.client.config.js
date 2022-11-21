@@ -7,13 +7,16 @@ const constants = require('../constants');
 const configFileName = 'src/client/tsconfig.json';
 const { DefinePlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const PostBuildHookWebpackPlugin = require('./postBuildHook.js');
 // Any build on the CI is considered production mode.
 const isProdBuild = constants.isCI || process.argv.some((argv) => argv.includes('mode') && argv.includes('production'));
 
-module.exports = {
+const defaultConfig = {
     context: constants.ExtensionRootDir,
     entry: {
-        renderers: './src/client/index.tsx'
+        renderers: './src/client/index.tsx',
+        builtinRendererHooks: './src/client/builtinRendererHooks.ts',
+        vegaRenderer: './src/client/vegaRenderer.ts'
     },
     output: {
         path: path.join(constants.ExtensionRootDir, 'out', 'client_renderer'),
@@ -132,3 +135,49 @@ module.exports = {
         ]
     }
 };
+const preloadConfig = {
+    context: constants.ExtensionRootDir,
+    entry: {
+        preload: './src/client/preload.ts'
+    },
+    output: {
+        path: path.join(constants.ExtensionRootDir, 'out', 'client_renderer'),
+        filename: '[name].js',
+        chunkFilename: `[name].bundle.js`,
+        libraryTarget: 'module'
+    },
+    experiments: {
+        outputModule: true
+    },
+    mode: isProdBuild ? 'production' : 'development',
+    devtool: isProdBuild ? 'source-map' : 'inline-source-map',
+    plugins: [
+        new ForkTsCheckerWebpackPlugin({
+            checkSyntacticErrors: true,
+            tsconfig: configFileName,
+            reportFiles: ['src/client/**/*.{ts,tsx}'],
+            memoryLimit: 9096
+        }),
+        new DefinePlugin({
+            scriptUrl: 'import.meta.url',
+            'process.env': '{}' // utils references `process.env.xxx`
+        }),
+        ...common.getDefaultPlugins('extension'),
+        new PostBuildHookWebpackPlugin()
+    ],
+    stats: {
+        performance: false
+    },
+    performance: {
+        hints: false
+    },
+    resolve: {
+        fallback: {
+            fs: false,
+            path: require.resolve('path-browserify'),
+            util: require.resolve('util') // vega uses `util.promisify` (we need something that works outside node)
+        },
+        extensions: ['.ts', '.js']
+    }
+};
+module.exports = [defaultConfig, preloadConfig];

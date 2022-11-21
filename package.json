@@ -2,9 +2,9 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.9",
+    "version": "1.0.12",
     "engines": {
-        "vscode": "^1.64.0"
+        "vscode": "^1.73.0-insider"
     },
     "publisher": "ms-toolsai",
     "author": {
@@ -19,7 +19,6 @@
     "bugs": {
         "url": "https://github.com/Microsoft/vscode-notebook-renderers/issues"
     },
-    "preview": true,
     "qna": "https://stackoverflow.com/questions/tagged/visual-studio-code+jupyter",
     "icon": "icon.png",
     "galleryBanner": {
@@ -42,9 +41,22 @@
     "activationEvents": [
         "onNotebook:*"
     ],
+    "enabledApiProposals": [
+        "contribNotebookStaticPreloads"
+    ],
     "main": "./out/extension_renderer/index.js",
     "browser": "./out/extension_renderer/index.js",
     "contributes": {
+        "notebookPreload": [
+            {
+                "type": "jupyter-notebook",
+                "entrypoint": "./out/client_renderer/preload.js"
+            },
+            {
+                "type": "interactive",
+                "entrypoint": "./out/client_renderer/preload.js"
+            }
+        ],
         "notebookRenderer": [
             {
                 "id": "jupyter-notebook-renderer",
@@ -63,13 +75,31 @@
                     "application/vnd.vega.v2+json",
                     "application/vnd.vega.v3+json",
                     "application/vnd.vega.v4+json",
-                    "application/vnd.vega.v5+json",
                     "application/vnd.vegalite.v1+json",
                     "application/vnd.vegalite.v2+json",
-                    "application/vnd.vegalite.v3+json",
-                    "application/vnd.vegalite.v4+json",
                     "application/x-nteract-model-debug+json",
                     "text/vnd.plotly.v1+html"
+                ]
+            },
+            {
+                "id": "jupyter-notebook-built-in-renderer-hooks",
+                "displayName": "Jupyter Notebook Html/JavaScript Renderer",
+                "requiresMessaging": "optional",
+                "entrypoint": {
+                    "extends": "vscode.builtin-renderer",
+                    "path": "./out/client_renderer/builtinRendererHooks.js"
+                }
+            },
+            {
+                "id": "jupyter-vega-renderer",
+                "displayName": "Jupyter Vega Renderer",
+                "requiresMessaging": "optional",
+                "entrypoint": "./out/client_renderer/vegaRenderer.js",
+                "mimeTypes": [
+                    "application/vnd.vega.v5+json",
+                    "application/vnd.vegalite.v3+json",
+                    "application/vnd.vegalite.v4+json",
+                    "application/vnd.vegalite.v5+json"
                 ]
             }
         ]
@@ -115,6 +145,7 @@
         "@phosphor/widgets": "^1.9.3",
         "chownr": "^2.0.0",
         "fs-minipass": "^2.1.0",
+        "jquery": "^3.6.1",
         "lodash": "^4.17.21",
         "minipass": "^3.1.6",
         "minizlib": "^2.1.2",
@@ -124,11 +155,15 @@
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
         "react-toggle": "^4.1.2",
+        "requirejs": "^2.3.6",
         "styled-components": "5.2.1",
         "tslib": "^1.14.1",
         "underscore": "^1.13.1",
         "util": "^0.12.3",
         "uuid": "^3.3.2",
+        "vega": "^5.22.1",
+        "vega-embed": "^6.21.0",
+        "vega-lite": "^5.5.0",
         "yallist": "^4.0.0"
     },
     "devDependencies": {

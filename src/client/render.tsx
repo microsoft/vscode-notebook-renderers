@@ -225,8 +225,8 @@ export class CellOutput extends React.Component<ICellOutputProps> {
                         onClick={copyPlotImage}
                         role="button"
                         aria-pressed="false"
-                        title="copy to clipboard"
-                        aria-label="copy to clipboard"
+                        title="Copy to Clipboard"
+                        aria-label="Copy to Clipboard"
                     >
                         <span>
                             <span className="image-button-child">
