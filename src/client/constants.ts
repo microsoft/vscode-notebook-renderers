@@ -25,3 +25,11 @@ export declare const ClipboardItem: {
 export const noop = () => {
     // noop
 };
+
+export function isDarkTheme() {
+    try {
+        return (document.body.dataset.vscodeThemeKind || '').toLowerCase().includes('dark');
+    } catch {
+        return false;
+    }
+}

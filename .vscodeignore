@@ -5,6 +5,7 @@ build/**
 out/test/**
 src/**
 .gitignore
+.nvmrc
 node_modules
 vsc-extension-quickstart.md
 **/tsconfig.json
@@ -16,4 +17,4 @@ vsc-extension-quickstart.md
 **/*.ts
 **/*.stats.json
 **/*.analyzer.html
-**/*.bundle.js.map
+**/*.map
