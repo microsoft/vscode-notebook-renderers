@@ -189,7 +189,7 @@
         "glob": "^7.1.6",
         "install": "^0.13.0",
         "less": "^3.11.3",
-        "mocha": "^7.2.0",
+        "mocha": "^10.1.0",
         "node-loader": "^2.0.0",
         "prettier": "^2.0.5",
         "style-loader": "^1.2.1",
