@@ -80,7 +80,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             this.disposables.push(disposable);
         }
 
-        const imgStyle: Record<string, string | number> = {};
+        const imgStyle: Record<string, string | number> = { maxWidth: '100%', height: 'auto' };
         const divStyle: Record<string, string | number> = { overflow: 'scroll', position: 'relative' }; // `overflow:scroll` is the default style used by Jupyter lab.
         const imgSrc =
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
@@ -91,14 +91,15 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
             imgStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
         }
+        const imgHeightWidth: { height?: number; width?: number } = {};
         const imageMetadata: Record<string, any> | undefined = customMetadata
             ? (customMetadata[mimeType] as any)
             : undefined;
         if (imageMetadata?.height) {
-            imgStyle.height = imageMetadata.height;
+            imgHeightWidth.height = imageMetadata.height;
         }
         if (imageMetadata?.width) {
-            imgStyle.width = imageMetadata.width;
+            imgHeightWidth.width = imageMetadata.width;
         }
         if (imageMetadata?.unconfined === true) {
             imgStyle.maxWidth = 'none';
@@ -155,7 +156,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             }
         };
         const contents = imgSrc ? (
-            <img src={imgSrc} style={imgStyle}></img>
+            <img src={imgSrc} style={imgStyle} {...imgHeightWidth}></img>
         ) : (
             <div className={'svgContainerStyle'} dangerouslySetInnerHTML={{ __html: data.toString() }} />
         );
