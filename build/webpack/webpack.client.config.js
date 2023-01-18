@@ -15,7 +15,6 @@ const defaultConfig = {
     context: constants.ExtensionRootDir,
     entry: {
         renderers: './src/client/index.tsx',
-        markdown: './src/client/markdown.ts',
         builtinRendererHooks: './src/client/builtinRendererHooks.ts',
         vegaRenderer: './src/client/vegaRenderer.ts'
     },
