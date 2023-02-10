@@ -6,10 +6,51 @@ const path = require('path');
 const constants = require('../constants');
 const configFileName = 'src/client/tsconfig.json';
 const { DefinePlugin } = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const PostBuildHookWebpackPlugin = require('./postBuildHook.js');
 // Any build on the CI is considered production mode.
 const isProdBuild = constants.isCI || process.argv.some((argv) => argv.includes('mode') && argv.includes('production'));
+const filesToCopy = [
+    {
+        from: path.join(
+            constants.ExtensionRootDir,
+            'node_modules',
+            '@vscode',
+            'jupyter-ipywidgets7',
+            'dist',
+            'ipywidgets.js'
+        ),
+        to: path.join(
+            constants.ExtensionRootDir,
+            'out',
+            'node_modules',
+            '@vscode',
+            'jupyter-ipywidgets7',
+            'dist',
+            'ipywidgets.js'
+        )
+    },
+    {
+        from: path.join(
+            constants.ExtensionRootDir,
+            'node_modules',
+            '@vscode',
+            'jupyter-ipywidgets8',
+            'dist',
+            'ipywidgets.js'
+        ),
+        to: path.join(
+            constants.ExtensionRootDir,
+            'out',
+            'node_modules',
+            '@vscode',
+            'jupyter-ipywidgets8',
+            'dist',
+            'ipywidgets.js'
+        )
+    }
+];
 
 const defaultConfig = {
     context: constants.ExtensionRootDir,
@@ -39,6 +80,9 @@ const defaultConfig = {
         new DefinePlugin({
             scriptUrl: 'import.meta.url',
             'process.env': '{}' // utils references `process.env.xxx`
+        }),
+        new CopyWebpackPlugin({
+            patterns: [...filesToCopy]
         }),
         ...common.getDefaultPlugins('extension')
     ],
