@@ -2,9 +2,9 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "engines": {
-        "vscode": "^1.76.0-insider"
+        "vscode": "^1.78.0-insider"
     },
     "publisher": "ms-toolsai",
     "author": {
@@ -168,7 +168,7 @@
         "minipass": "^3.1.6",
         "minizlib": "^2.1.2",
         "path-browserify": "^0.0.1",
-        "plotly.js-dist": "^2.11.1",
+        "plotly.js-dist": "^2.20.0",
         "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
@@ -179,9 +179,9 @@
         "underscore": "^1.13.1",
         "util": "^0.12.3",
         "uuid": "^3.3.2",
-        "vega": "^5.22.1",
-        "vega-embed": "^6.21.0",
-        "vega-lite": "^5.5.0",
+        "vega": "^5.24.0",
+        "vega-embed": "^6.21.3",
+        "vega-lite": "^5.6.1",
         "yallist": "^4.0.0"
     },
     "devDependencies": {
@@ -218,9 +218,9 @@
         "typescript": "^4.7.4",
         "url-loader": "^4.1.0",
         "vscode-test": "^1.4.0",
-        "webpack": "^5.0.0",
-        "webpack-bundle-analyzer": "^4.5.0",
-        "webpack-cli": "^4.0.0",
+        "webpack": "^5.76.3",
+        "webpack-bundle-analyzer": "^4.8.0",
+        "webpack-cli": "^5.0.1",
         "webpack-fix-default-import-plugin": "^1.0.3"
     },
     "optionalDependencies": {
