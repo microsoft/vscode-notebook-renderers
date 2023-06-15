@@ -1,4 +1,7 @@
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
 pr: none
 
 resources:
@@ -9,10 +12,16 @@ resources:
       ref: main
       endpoint: Monaco
 
+parameters:
+  - name: publishExtension
+    displayName: 🚀 Publish Extension
+    type: boolean
+    default: false
+
 extends:
   template: azure-pipelines/extension/stable.yml@templates
   parameters:
-    publishExtension: true
+    publishExtension: ${{ parameters.publishExtension }}
     buildSteps:
       - bash: npm i -g npm@8.15.1
         displayName: Install npm@8.15.1
