@@ -3,19 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import type * as MarkdownIt from 'markdown-it';
-import type { RendererContext } from 'vscode-notebook-renderer';
-
-interface MarkdownItRenderer {
-    extendMarkdownIt(fn: (md: MarkdownIt) => void): void;
-}
-const css = `
+const styleContent = `
 <style>
-/*
-Found that the colors of the alert boxes do not change with different themes in jlab.
-Hence hardcoded them here.
-*/
-
+.dummy {
+    /* the first rule doesn't get applied for some reason */
+}
 .alert {
     width: auto;
     padding: 1em;
@@ -51,14 +43,11 @@ Hence hardcoded them here.
 </style>
 `;
 
-export async function activate(ctx: RendererContext<void>) {
-    const markdownItRenderer = (await ctx.getRenderer('vscode.markdown-it-renderer')) as MarkdownItRenderer | undefined;
-    if (!markdownItRenderer) {
-        throw new Error(`Could not load 'vscode.markdown-it-renderer'`);
-    }
-
-    markdownItRenderer.extendMarkdownIt((md: MarkdownIt) => {
-        const original = md.render.bind(md);
-        md.render = (src: string) => `${css}${original(src)}`;
-    });
+export async function activate() {
+    const style = document.createElement('style');
+    style.textContent = styleContent;
+    const template = document.createElement('template');
+    template.classList.add('markdown-style');
+    template.content.appendChild(style);
+    document.head.appendChild(template);
 }
