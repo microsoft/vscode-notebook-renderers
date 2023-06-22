@@ -2,9 +2,9 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "engines": {
-        "vscode": "^1.78.0-insider"
+        "vscode": "^1.80.0"
     },
     "publisher": "ms-toolsai",
     "author": {
