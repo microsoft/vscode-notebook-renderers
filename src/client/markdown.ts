@@ -4,10 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 const styleContent = `
-<style>
-.dummy {
-    /* the first rule doesn't get applied for some reason */
-}
 .alert {
     width: auto;
     padding: 1em;
@@ -40,7 +36,6 @@ const styleContent = `
     background-color: rgb(255,205,210);
     color: rgb(183,28,28);
 }
-</style>
 `;
 
 export async function activate() {
