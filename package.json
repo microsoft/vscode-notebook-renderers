@@ -126,9 +126,6 @@
                     "path": "./out/client_renderer/markdown.js"
                 }
             }
-        ],
-        "markdown.previewStyles": [
-            "resources/jupyter-markdown.css"
         ]
     },
     "scripts": {
