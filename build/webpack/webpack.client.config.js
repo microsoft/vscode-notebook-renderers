@@ -71,6 +71,8 @@ const defaultConfig = {
     },
     mode: isProdBuild ? 'production' : 'development',
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
+    // Exclude ansi-to-react to avoid warnings about CG, its not used, but gets pulled in via @nteract/renderers
+    externals: ['vscode', 'commonjs', 'ansi-to-react'],
     plugins: [
         new ForkTsCheckerWebpackPlugin({
             checkSyntacticErrors: true,
