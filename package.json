@@ -150,7 +150,7 @@
         "postinstall": "node ./build/postInstall.js"
     },
     "dependencies": {
-        "@babel/helper-validator-identifier": "^7.10.1",
+        "@babel/helper-validator-identifier": "^7.22.20",
         "@blueprintjs/core": "^3.7.0",
         "@blueprintjs/select": "^3.2.0",
         "@jupyter-widgets/base": "^4.1.0",
