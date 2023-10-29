@@ -48,3 +48,10 @@ Steps to build the extension on your machine once you've cloned the repo:
 > npm run package
 ```
 
+
+## Local Debugging
+
+1. From the debug panel select `Run Extension`
+    Note: This will automatically start the incremental build task.
+    Optionally, use the command `Debug: Select and Start Debugging -> Run Extension`
+2. Once VS Code launches, open a notebook file (`.ipynb`) with output for one of the mime types supported by this extension (such as `application/vnd.vega.v2+json`)
