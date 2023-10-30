@@ -4,6 +4,31 @@ A [Visual Studio Code](https://code.visualstudio.com/) extension that provides r
 
 <img src=https://raw.githubusercontent.com/microsoft/vscode-notebook-renderers/main/images/sample.png>
 
+# Getting Started
+* Install this extension
+* Open a Jupyter Notebook in VS Code
+* Outputs of the following mime type will be rendered by this extension:
+    * image/gif
+    * image/png
+    * image/jpeg
+    * image/svg+xml
+    * application/geo+json
+    * application/vdom.v1+json
+    * application/vnd.dataresource+json
+    * application/vnd.plotly.v1+json
+    * application/vnd.vega.v2+json
+    * application/vnd.vega.v3+json
+    * application/vnd.vega.v4+json
+    * application/vnd.vega.v5+json
+    * application/vnd.vegalite.v1+json
+    * application/vnd.vegalite.v2+json
+    * application/vnd.vegalite.v3+json
+    * application/vnd.vegalite.v4+json
+    * application/vnd.vegalite.v5+json
+    * application/x-nteract-model-debug+json
+    * text/vnd.plotly.v1+html
+
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
