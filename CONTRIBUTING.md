@@ -5,8 +5,8 @@
 
 ### Prerequisites
 
-1. [Node.js](https://nodejs.org/) 16.14.2
-1. npm 8.15.1
+1. [Node.js](https://nodejs.org/) 18.15.0
+1. npm 9.5.0
 1. Windows, macOS, or Linux
 1. [Visual Studio Code](https://code.visualstudio.com/)
 1. The following VS Code extensions:
@@ -43,7 +43,7 @@ TypeScript errors and warnings will be displayed in the `Problems` window of Vis
 Steps to build the extension on your machine once you've cloned the repo:
 
 ```bash
-> npm install -g vsce
+> npm install -g @vscode/vsce
 > npm ci
 > npm run package
 ```

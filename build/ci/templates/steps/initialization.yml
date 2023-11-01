@@ -35,7 +35,7 @@ steps:
       customCommand: ci
 
   - bash: |
-      npm install -g vsce
+      npm install -g @vscode/vsce
     displayName: 'Install vsce'
 
   # https://code.visualstudio.com/api/working-with-extensions/continuous-integration#azure-pipelines
