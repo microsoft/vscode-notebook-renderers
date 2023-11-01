@@ -83,6 +83,7 @@
                     "image/gif",
                     "image/png",
                     "image/jpeg",
+                    "image/webp",
                     "image/svg+xml",
                     "application/geo+json",
                     "application/vdom.v1+json",

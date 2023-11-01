@@ -53,6 +53,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             case 'image/png':
             case 'image/gif':
             case 'image/jpeg':
+            case 'image/webp':
                 return this.renderImage(
                     this.props.mimeType,
                     data as unknown as Blob | MediaSource,
