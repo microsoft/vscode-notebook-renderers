@@ -43,7 +43,7 @@ TypeScript errors and warnings will be displayed in the `Problems` window of Vis
 Steps to build the extension on your machine once you've cloned the repo:
 
 ```bash
-> npm install -g vsce
+> npm install -g @vscode/vsce
 > npm ci
 > npm run package
 ```
