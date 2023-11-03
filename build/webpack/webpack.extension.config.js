@@ -20,10 +20,12 @@ module.exports = {
     },
     mode: 'production',
     devtool: 'source-map',
-    // Exclude ansi-to-react to avoid warnings about CG, its not used, but gets pulled in via @nteract/renderers
-    externals: ['vscode', 'commonjs', 'ansi-to-react'],
+    externals: ['vscode', 'commonjs'],
     plugins: [...common.getDefaultPlugins('extension')],
     resolve: {
+        fallback: {
+            'ansi-to-react': path.join(__dirname, 'ansi-to-react.js')
+        },
         extensions: ['.ts', '.js']
     },
     node: {

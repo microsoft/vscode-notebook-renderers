@@ -71,8 +71,7 @@ const defaultConfig = {
     },
     mode: isProdBuild ? 'production' : 'development',
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
-    // Exclude ansi-to-react to avoid warnings about CG, its not used, but gets pulled in via @nteract/renderers
-    externals: ['vscode', 'commonjs', 'ansi-to-react'],
+    externals: ['vscode', 'commonjs'],
     plugins: [
         new ForkTsCheckerWebpackPlugin({
             checkSyntacticErrors: true,
@@ -99,6 +98,7 @@ const defaultConfig = {
         fallback: {
             fs: false,
             path: require.resolve('path-browserify'),
+            'ansi-to-react': path.join(__dirname, 'ansi-to-react.js'),
             util: require.resolve('util') // vega uses `util.promisify` (we need something that works outside node)
         },
         extensions: ['.ts', '.tsx', '.js', '.json', '.svg']
