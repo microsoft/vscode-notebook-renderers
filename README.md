@@ -12,6 +12,7 @@ A [Visual Studio Code](https://code.visualstudio.com/) extension that provides r
     * image/png
     * image/jpeg
     * image/svg+xml
+    * image/webp
     * application/geo+json
     * application/vdom.v1+json
     * application/vnd.dataresource+json
