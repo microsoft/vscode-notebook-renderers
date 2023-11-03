@@ -24,7 +24,7 @@ module.exports = {
     plugins: [...common.getDefaultPlugins('extension')],
     resolve: {
         fallback: {
-            'anso-to-react': path.join(__dirname, 'ansi-to-react.js')
+            'ansi-to-react': path.join(__dirname, 'ansi-to-react.js')
         },
         extensions: ['.ts', '.js']
     },

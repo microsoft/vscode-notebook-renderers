@@ -98,7 +98,7 @@ const defaultConfig = {
         fallback: {
             fs: false,
             path: require.resolve('path-browserify'),
-            'anso-to-react': path.join(__dirname, 'ansi-to-react.js'),
+            'ansi-to-react': path.join(__dirname, 'ansi-to-react.js'),
             util: require.resolve('util') // vega uses `util.promisify` (we need something that works outside node)
         },
         extensions: ['.ts', '.tsx', '.js', '.json', '.svg']
