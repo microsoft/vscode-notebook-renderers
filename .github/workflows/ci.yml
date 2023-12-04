@@ -14,10 +14,10 @@ on:
       - 'release/*'
   check_run:
     types: [rerequested, requested_action]
-  push:
-    branches:
-      - main
-      - 'release/*'
+#   push:
+#     branches:
+#       - main
+#       - 'release/*'
   workflow_dispatch:
 
 env:
