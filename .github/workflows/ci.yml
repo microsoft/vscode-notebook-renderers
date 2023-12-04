@@ -1,0 +1,61 @@
+# This yml is used for PRs, pre-release, and release build.
+# We use the github.event_name to determine what started the workflow to determine which
+# situation we are in.
+
+name: CI
+
+permissions:
+  deployments: write
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'release/*'
+  check_run:
+    types: [rerequested, requested_action]
+#   push:
+#     branches:
+#       - main
+#       - 'release/*'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 18.15.0
+  NPM_VERSION: 9.5.0
+
+jobs:
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+    if: github.repository == 'microsoft/vscode-notebook-renderers'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node ${{env.NODE_VERSION}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{env.NODE_VERSION}}
+
+      - name: Use Npm ${{env.NPM_VERSION}}
+        run: npm i -g npm@${{env.NPM_VERSION}}
+
+      - run: npm i -g @vscode/vsce
+
+      - run: npm ci
+        name: Install dependencies
+
+      - run: npm run lint
+        name: 'Lint'
+
+      - run: npm run lint-format
+        name: 'Code Format'
+
+      - name: Build VSIX
+        run: npm run package
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 'ms-notebook-renderers.vsix'
+          path: 'ms-notebook-renderers.vsix'
