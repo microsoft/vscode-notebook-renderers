@@ -87,7 +87,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as PartialJSONObject | undefined;
         const showPlotViewer = metadata.__displayOpenPlotIcon === true;
-        const showCopyImage = mimeType === 'image/png';
+        const showCopyImage = mimeType === 'image/png' || mimeType === 'image/webp';
         const copyButtonMargin = showPlotViewer ? '85px' : '45px';
         if (customMetadata && typeof customMetadata.needs_background === 'string') {
             imgStyle.backgroundColor = customMetadata.needs_background === 'light' ? 'white' : 'black';
@@ -128,7 +128,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
             }
         };
         const copyPlotImage = () => {
-            writeImageToClipboard(data as Blob).then(noop);
+            writeImageToClipboard(data as Blob, this.props.mimeType).then(noop);
         };
         const onMouseOver = () => {
             if (!(globalThis as any).__isJupyterInstalled) {
