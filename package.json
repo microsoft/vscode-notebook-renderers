@@ -38,6 +38,7 @@
         "Notebooks",
         "Visualization"
     ],
+    "activationEvents": [],
     "enabledApiProposals": [
         "contribNotebookStaticPreloads"
     ],
