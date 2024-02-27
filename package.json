@@ -2,7 +2,7 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "engines": {
         "vscode": "^1.80.0"
     },
@@ -176,7 +176,7 @@
         "minipass": "^3.1.6",
         "minizlib": "^2.1.2",
         "path-browserify": "^0.0.1",
-        "plotly.js-dist": "^2.20.0",
+        "plotly.js-dist": "^2.29.1",
         "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
