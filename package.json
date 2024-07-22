@@ -181,7 +181,7 @@
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
         "react-toggle": "^4.1.2",
-        "requirejs": "^2.3.6",
+        "requirejs": "^2.3.7",
         "styled-components": "5.2.1",
         "tslib": "^1.14.1",
         "underscore": "^1.13.1",
