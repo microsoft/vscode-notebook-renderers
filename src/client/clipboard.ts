@@ -1,11 +1,12 @@
 declare const ClipboardItem: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     prototype: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
     new (options: any): any;
 };
 declare interface ClipboardItem {
     readonly types: ReadonlyArray<string>;
+    // eslint-disable-next-line no-unused-vars
     getType(type: string): Promise<Blob>;
 }
 

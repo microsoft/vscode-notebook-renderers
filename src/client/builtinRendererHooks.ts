@@ -9,7 +9,7 @@ const getPublicPath = () => {
     return new URL(scriptUrl.replace(/[^/]+$/, '')).toString();
 };
 
-// eslint-disable-next-line prefer-const
+// eslint-disable-next-line prefer-const, no-unused-vars, @typescript-eslint/no-unused-vars
 __webpack_public_path__ = getPublicPath();
 
 import type { OutputItem, RendererContext } from 'vscode-notebook-renderer';
