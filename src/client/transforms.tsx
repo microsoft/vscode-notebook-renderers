@@ -8,8 +8,12 @@ import Loadable, { LoadableComponent } from '@loadable/component';
 class TransformData {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private cachedPromise: undefined | Promise<any>;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(public mimeType: string, private importer: () => Promise<any>) {}
+    constructor(
+        // eslint-disable-next-line no-unused-vars
+        public mimeType: string,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
+        private importer: () => Promise<any>
+    ) {}
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public getComponent(): Promise<any> {
         if (!this.cachedPromise) {
