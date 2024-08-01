@@ -28,8 +28,8 @@ export async function activate(context: ExtensionContext): Promise<{
                         editor
                     )
                     .then(
-                        (fulfilled) => {
-                            console.log('Sent to UI', fulfilled);
+                        () => {
+                            /* noop */
                         },
                         (ex) => console.error('Failed to send', ex)
                     );

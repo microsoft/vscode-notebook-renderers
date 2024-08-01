@@ -2,7 +2,7 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "engines": {
         "vscode": "^1.80.0"
     },
@@ -181,7 +181,7 @@
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
         "react-toggle": "^4.1.2",
-        "requirejs": "^2.3.6",
+        "requirejs": "^2.3.7",
         "styled-components": "5.2.1",
         "tslib": "^1.14.1",
         "underscore": "^1.13.1",
