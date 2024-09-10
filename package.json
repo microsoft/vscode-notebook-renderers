@@ -165,7 +165,7 @@
         "minipass": "^3.1.6",
         "minizlib": "^2.1.2",
         "path-browserify": "^0.0.1",
-        "plotly.js-dist": "^2.35.1",
+        "plotly.js-dist": "^2.35.2",
         "re-resizable": "~6.5.5",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
