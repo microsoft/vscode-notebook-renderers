@@ -4,7 +4,7 @@
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
     "version": "1.0.20",
     "engines": {
-        "vscode": "^1.80.0"
+        "vscode": "^1.95.0"
     },
     "publisher": "ms-toolsai",
     "author": {
