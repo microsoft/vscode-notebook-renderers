@@ -1,0 +1,44 @@
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: microsoft/vscode-engineering
+      ref: main
+      endpoint: Monaco
+
+parameters:
+  - name: publishExtension
+    displayName: 🚀 Publish Extension
+    type: boolean
+    default: false
+
+extends:
+  template: azure-pipelines/extension/pre-release.yml@templates
+  parameters:
+    ghCreateTag: false
+    standardizedVersioning: true
+    publishExtension: ${{ parameters.publishExtension }}
+    buildSteps:
+      - bash: npm i -g npm@9.5.0
+        displayName: Install npm@9.5.0
+
+      - script: npm ci
+        displayName: Install dependencies
+
+      - bash: npm run lint
+        displayName: 'Lint'
+
+      - bash: npm run lint-format
+        displayName: 'Code Format'
+
+      - script: npm run compile
+        displayName: Compile
+
+    tsa:
+      config:
+        areaPath: 'Visual Studio Code Jupyter Extensions'
+        serviceTreeID: '14f24efd-b502-422a-9f40-09ea7ce9cf14'
+      enabled: true
