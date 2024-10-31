@@ -9,7 +9,7 @@ const getPublicPath = () => {
     return new URL(scriptUrl.replace(/[^/]+$/, '')).toString();
 };
 
-// eslint-disable-next-line prefer-const
+// eslint-disable-next-line prefer-const, @typescript-eslint/no-unused-vars, no-unused-vars
 __webpack_public_path__ = getPublicPath();
 
 import * as vegaEmbed from 'vega-embed';

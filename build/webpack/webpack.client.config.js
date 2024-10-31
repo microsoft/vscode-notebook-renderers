@@ -74,10 +74,14 @@ const defaultConfig = {
     externals: ['vscode', 'commonjs'],
     plugins: [
         new ForkTsCheckerWebpackPlugin({
-            checkSyntacticErrors: true,
-            tsconfig: configFileName,
-            reportFiles: ['src/client/**/*.{ts,tsx}'],
-            memoryLimit: 9096
+            typescript: {
+                diagnosticOptions: {
+                    syntactic: true
+                },
+                configFile: configFileName,
+                memoryLimit: 9096
+                // reportFiles: ['src/client/**/*.{ts,tsx}'],
+            }
         }),
         new DefinePlugin({
             scriptUrl: 'import.meta.url',
@@ -200,10 +204,14 @@ const preloadConfig = {
     devtool: isProdBuild ? 'source-map' : 'inline-source-map',
     plugins: [
         new ForkTsCheckerWebpackPlugin({
-            checkSyntacticErrors: true,
-            tsconfig: configFileName,
-            reportFiles: ['src/client/**/*.{ts,tsx}'],
-            memoryLimit: 9096
+            typescript: {
+                diagnosticOptions: {
+                    syntactic: true
+                },
+                configFile: configFileName,
+                memoryLimit: 9096
+                // reportFiles: ['src/client/**/*.{ts,tsx}'],
+            }
         }),
         new DefinePlugin({
             scriptUrl: 'import.meta.url',

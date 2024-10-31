@@ -19,7 +19,7 @@ export type SaveImageAs = {
 export declare const ClipboardItem: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     prototype: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
     new (options: any): any;
 };
 export const noop = () => {
