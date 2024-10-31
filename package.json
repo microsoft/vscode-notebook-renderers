@@ -156,7 +156,7 @@
         "@nteract/transform-vega": "7.0.10",
         "@nteract/transforms": "^3.2.0",
         "@vscode/jupyter-ipywidgets7": "^2.0.1",
-        "@vscode/jupyter-ipywidgets8": "^1.0.4",
+        "@vscode/jupyter-ipywidgets8": "^1.0.5",
         "canvas": "^2.11.2",
         "chownr": "^2.0.0",
         "fs-minipass": "^2.1.0",
