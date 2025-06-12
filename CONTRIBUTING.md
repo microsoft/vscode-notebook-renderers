@@ -1,12 +1,11 @@
 # Contributing to the Notebook Renderers extension for Visual Studio Code
 
-
 ## Contributing a pull request
 
 ### Prerequisites
 
-1. [Node.js](https://nodejs.org/) 18.15.0
-1. npm 9.5.0
+1. [Node.js](https://nodejs.org/) 22.15.1
+1. npm 10.9.2
 1. Windows, macOS, or Linux
 1. [Visual Studio Code](https://code.visualstudio.com/)
 1. The following VS Code extensions:
@@ -48,10 +47,9 @@ Steps to build the extension on your machine once you've cloned the repo:
 > npm run package
 ```
 
-
 ## Local Debugging
 
 1. From the debug panel select `Run Extension`
-    Note: This will automatically start the incremental build task.
-    Optionally, use the command `Debug: Select and Start Debugging -> Run Extension`
+   Note: This will automatically start the incremental build task.
+   Optionally, use the command `Debug: Select and Start Debugging -> Run Extension`
 2. Once VS Code launches, open a notebook file (`.ipynb`) with output for one of the mime types supported by this extension (such as `application/vnd.vega.v2+json`)
