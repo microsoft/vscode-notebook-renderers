@@ -157,7 +157,7 @@
         "@nteract/transforms": "^3.2.0",
         "@vscode/jupyter-ipywidgets7": "^2.0.4",
         "@vscode/jupyter-ipywidgets8": "^1.0.9",
-        "canvas": "^2.11.2",
+        "canvas": "^3.1.0",
         "chownr": "^2.0.0",
         "fs-minipass": "^2.1.0",
         "jquery": "^3.6.1",
