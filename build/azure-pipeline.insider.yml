@@ -25,8 +25,8 @@ extends:
     standardizedVersioning: true
     publishExtension: ${{ parameters.publishExtension }}
     buildSteps:
-      - bash: npm i -g npm@9.5.0
-        displayName: Install npm@9.5.0
+      - bash: npm i -g npm@10.9.2
+        displayName: Install npm@10.9.2
 
       - script: npm ci
         displayName: Install dependencies

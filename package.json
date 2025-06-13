@@ -2,7 +2,7 @@
     "name": "jupyter-renderers",
     "displayName": "Jupyter Notebook Renderers",
     "description": "Renderers for Jupyter Notebooks (with plotly, vega, gif, png, svg, jpeg and other such outputs)",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "engines": {
         "vscode": "^1.95.0"
     },
@@ -156,8 +156,8 @@
         "@nteract/transform-vega": "7.0.10",
         "@nteract/transforms": "^3.2.0",
         "@vscode/jupyter-ipywidgets7": "^2.0.4",
-        "@vscode/jupyter-ipywidgets8": "^1.0.8",
-        "canvas": "^2.11.2",
+        "@vscode/jupyter-ipywidgets8": "^1.0.9",
+        "canvas": "^3.1.0",
         "chownr": "^2.0.0",
         "fs-minipass": "^2.1.0",
         "jquery": "^3.6.1",
