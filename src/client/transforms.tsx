@@ -46,6 +46,7 @@ const mimeTypeToImport: TransformData[] = [
         // Vega6 support - create our own component similar to how @nteract does it
         const module = await import(/* webpackChunkName: "vega" */ '@nteract/transform-vega');
         // Use the same pattern as Vega5 but for v6
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const Vega6 = module.Vega('application/vnd.vega.v5+json' as any); // Cast to bypass type check
         return { ...Vega6, MIMETYPE: 'application/vnd.vega.v6+json' };
     }),

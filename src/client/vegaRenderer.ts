@@ -16,9 +16,34 @@ __webpack_public_path__ = getPublicPath();
 import { isDarkTheme } from './constants';
 import { ActivationFunction, OutputItem, RendererContext } from 'vscode-notebook-renderer';
 
-// Define types we need without importing them directly
-type EmbedOptions = any;
-type Result = any;
+// Define types we need without importing them directly to avoid module resolution issues
+interface EmbedOptions {
+    bind?: HTMLElement | string;
+    actions?:
+        | boolean
+        | {
+              export?: boolean | { svg?: boolean; png?: boolean };
+              source?: boolean;
+              compiled?: boolean;
+              editor?: boolean;
+          };
+    mode?: 'vega' | 'vega-lite';
+    theme?: string;
+    defaultStyle?: boolean | string;
+    loader?: {
+        sanitize?: (_uri: string, _options: unknown) => Promise<string>;
+        [key: string]: unknown;
+    };
+    [key: string]: unknown;
+}
+interface Result {
+    view: {
+        finalize?: () => void;
+        [key: string]: unknown;
+    };
+    finalize: () => void;
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type VisualizationSpec = any;
 
 const vegaViews = new Map<string, Result>();
