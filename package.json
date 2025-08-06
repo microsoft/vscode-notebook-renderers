@@ -112,6 +112,7 @@
                 "entrypoint": "./out/client_renderer/vegaRenderer.js",
                 "mimeTypes": [
                     "application/vnd.vega.v5+json",
+                    "application/vnd.vega.v6+json",
                     "application/vnd.vegalite.v3+json",
                     "application/vnd.vegalite.v4+json",
                     "application/vnd.vegalite.v5+json"
@@ -176,9 +177,9 @@
         "underscore": "^1.13.1",
         "util": "^0.12.3",
         "uuid": "^3.3.2",
-        "vega": "^5.33.0",
-        "vega-embed": "^6.29.0",
-        "vega-lite": "^5.23.0",
+        "vega": "^6.1.2",
+        "vega-embed": "^7.0.2",
+        "vega-lite": "^6.2.0",
         "yallist": "^4.0.0"
     },
     "devDependencies": {

@@ -42,6 +42,13 @@ const mimeTypeToImport: TransformData[] = [
         const module = await import(/* webpackChunkName: "vega" */ '@nteract/transform-vega');
         return module.Vega5;
     }),
+    new TransformData('application/vnd.vega.v6+json', async () => {
+        // Vega6 support - create our own component similar to how @nteract does it
+        const module = await import(/* webpackChunkName: "vega" */ '@nteract/transform-vega');
+        // Use the same pattern as Vega5 but for v6
+        const Vega6 = module.Vega('application/vnd.vega.v5+json' as any); // Cast to bypass type check
+        return { ...Vega6, MIMETYPE: 'application/vnd.vega.v6+json' };
+    }),
     new TransformData('application/vnd.vegalite.v1+json', async () => {
         const module = await import(/* webpackChunkName: "vega" */ '@nteract/transform-vega');
         return module.VegaLite1;
