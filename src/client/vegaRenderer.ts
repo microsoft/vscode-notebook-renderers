@@ -11,29 +11,30 @@ const getPublicPath = () => {
 
 // eslint-disable-next-line prefer-const, @typescript-eslint/no-unused-vars, no-unused-vars
 __webpack_public_path__ = getPublicPath();
-
-import * as vegaEmbed from 'vega-embed';
+import type * as vegaEmbedTypes from 'vega-embed/build/embed';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const vegaEmbed = require('vega-embed');
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 import { isDarkTheme } from './constants';
 import { ActivationFunction, OutputItem, RendererContext } from 'vscode-notebook-renderer';
 
-const vegaViews = new Map<string, vegaEmbed.Result>();
+const vegaViews = new Map<string, vegaEmbedTypes.Result>();
 const VEGA_MIME_TYPE = 'application/vnd.vega.v5+json';
 export const activate: ActivationFunction = (_ctx: RendererContext<unknown>) => {
     return {
         async renderOutputItem(outputItem: OutputItem, element: HTMLElement) {
-            const metadata: Record<typeof outputItem.mime, { embed_options?: vegaEmbed.EmbedOptions }> =
+            const metadata: Record<typeof outputItem.mime, { embed_options?: vegaEmbedTypes.EmbedOptions }> =
                 outputItem.metadata && typeof outputItem.metadata === 'object' && 'metadata' in outputItem.metadata
                     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       (outputItem.metadata as any)['metadata']
                     : {};
-            const mode: vegaEmbed.Mode = outputItem.mime === VEGA_MIME_TYPE ? 'vega' : 'vega-lite';
-            const spec: vegaEmbed.VisualizationSpec = outputItem.json();
+            const mode: vegaEmbedTypes.Mode = outputItem.mime === VEGA_MIME_TYPE ? 'vega' : 'vega-lite';
+            const spec: vegaEmbedTypes.VisualizationSpec = outputItem.json();
             if (spec === undefined) {
                 return;
             }
             const mimeMetadata = metadata && outputItem.mime in metadata ? metadata[outputItem.mime] || {} : {};
-            const embedOptions: vegaEmbed.EmbedOptions =
+            const embedOptions: vegaEmbedTypes.EmbedOptions =
                 typeof mimeMetadata === 'object' && mimeMetadata ? mimeMetadata.embed_options || {} : {};
 
             if (isDarkTheme() && !embedOptions.theme && !spec.background) {
