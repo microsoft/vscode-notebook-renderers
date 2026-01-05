@@ -91,7 +91,6 @@
                     "application/vnd.vega.v4+json",
                     "application/vnd.vegalite.v1+json",
                     "application/vnd.vegalite.v2+json",
-                    "application/vnd.vegalite.v6.json",
                     "application/x-nteract-model-debug+json",
                     "text/vnd.plotly.v1+html"
                 ]
