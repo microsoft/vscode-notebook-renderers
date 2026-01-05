@@ -10,5 +10,6 @@
             "dom"
         ],
         "jsx": "react",
+        "moduleResolution": "bundler"
     }
 }
