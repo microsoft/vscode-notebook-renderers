@@ -159,7 +159,7 @@
         "chownr": "^2.0.0",
         "fs-minipass": "^2.1.0",
         "jquery": "^3.6.1",
-        "lodash": "^4.17.21",
+        "lodash": "^4.17.23",
         "minipass": "^3.1.6",
         "minizlib": "^2.1.2",
         "path-browserify": "^0.0.1",
