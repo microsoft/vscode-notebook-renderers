@@ -194,7 +194,7 @@
         "@typescript-eslint/eslint-plugin": "^7.18.0",
         "@typescript-eslint/parser": "^7.18.0",
         "concurrently": "^5.2.0",
-        "copy-webpack-plugin": "^12.0.2",
+        "copy-webpack-plugin": "^14.0.0",
         "css-loader": "^7.1.2",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
@@ -216,15 +216,6 @@
         "webpack-fix-default-import-plugin": "^1.0.3"
     },
     "overrides": {
-        "simple-get": "3.1.1",
-        "node-fetch": "2.6.7",
-        "prismjs": "1.30.0",
-        "url-parse@<1.5.9": "1.5.9",
-        "terser@<5.14.2": "5.14.2",
-        "ua-parser-js": "0.7.24",
-        "moment@<2.29.4": "2.29.4",
-        "nanoid@<3.3.8": "3.3.8",
-        "ws@<7.4.6": "7.5.10",
-        "tar-fs@<2.1.4": "2.1.4"
+        "prismjs": "1.30.0"
     }
 }
