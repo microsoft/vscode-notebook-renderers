@@ -82,7 +82,7 @@ export class CellOutput extends React.Component<ICellOutputProps> {
         }
 
         const imgStyle: Record<string, string | number> = { maxWidth: '100%', height: 'auto' };
-        const divStyle: Record<string, string | number> = { overflow: 'scroll', position: 'relative' }; // `overflow:scroll` is the default style used by Jupyter lab.
+        const divStyle: Record<string, string | number> = { overflow: 'auto', position: 'relative' }; // `overflow:scroll` is the default style used by Jupyter lab.
         const imgSrc =
             mimeType.toLowerCase().includes('svg') && typeof data === 'string' ? undefined : URL.createObjectURL(data);
         const customMetadata = metadata.metadata as PartialJSONObject | undefined;
