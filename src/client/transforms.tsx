@@ -62,10 +62,6 @@ const mimeTypeToImport: TransformData[] = [
         const module = await import(/* webpackChunkName: "geojson" */ '@nteract/transform-geojson');
         return module.GeoJSONTransform;
     }),
-    new TransformData('application/vnd.dataresource+json', async () => {
-        const module = await import(/* webpackChunkName: "dataresource" */ '@nteract/transform-dataresource');
-        return module.DataResourceTransform;
-    }),
     new TransformData('application/x-nteract-model-debug+json', async () => {
         const module = await import(/* webpackChunkName: "modeldebug" */ '@nteract/transform-model-debug');
         return module.default;

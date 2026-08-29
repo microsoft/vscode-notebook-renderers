@@ -15,7 +15,6 @@ A [Visual Studio Code](https://code.visualstudio.com/) extension that provides r
     * image/webp
     * application/geo+json
     * application/vdom.v1+json
-    * application/vnd.dataresource+json
     * application/vnd.plotly.v1+json
     * application/vnd.vega.v2+json
     * application/vnd.vega.v3+json

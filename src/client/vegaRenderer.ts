@@ -53,7 +53,8 @@ export const activate: ActivationFunction = (_ctx: RendererContext<unknown>) => 
                     const absPath = await resolver.resolveUrl(uri);
                     uri = await resolver.getDownloadUrl(absPath);
                 }
-                return loader.sanitize(uri, options);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                return loader.sanitize(uri, options as any);
             };
             // Don't use `element`, else the menu options appear on the far right.
             // Because `element` has a fixed width, and `ele` (newly created) does not.

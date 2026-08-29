@@ -14,15 +14,15 @@ on:
       - 'release/*'
   check_run:
     types: [rerequested, requested_action]
-#   push:
-#     branches:
-#       - main
-#       - 'release/*'
+  #   push:
+  #     branches:
+  #       - main
+  #       - 'release/*'
   workflow_dispatch:
 
 env:
-  NODE_VERSION: 18.15.0
-  NPM_VERSION: 9.5.0
+  NODE_VERSION: 22.15.1
+  NPM_VERSION: 10.9.2
 
 jobs:
   build:
@@ -31,10 +31,10 @@ jobs:
     if: github.repository == 'microsoft/vscode-notebook-renderers'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Use Node ${{env.NODE_VERSION}}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{env.NODE_VERSION}}
 
@@ -55,7 +55,7 @@ jobs:
       - name: Build VSIX
         run: npm run package
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: 'ms-notebook-renderers.vsix'
           path: 'ms-notebook-renderers.vsix'

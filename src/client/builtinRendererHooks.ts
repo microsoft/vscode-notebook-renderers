@@ -65,7 +65,8 @@ export async function activate(ctx: RendererContext<void>) {
                             }],
                         };
                         // Required by JS code in Jupyter notebook renderers again, even scenepic (Microsoft Python widget) uses this.
-                        const ele = $(document.getElementById("${element.id}"));
+                        const ele = document.getElementById("${element.id}");
+                        ele.textContent='';
                         (function (element){
                             gotToUserScript = true;
                             ${script}
