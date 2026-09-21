@@ -216,6 +216,7 @@
         "webpack-fix-default-import-plugin": "^1.0.3"
     },
     "overrides": {
-        "prismjs": "1.30.0"
+        "prismjs": "1.30.0",
+        "sanitize-html": "2.17.7"
     }
 }
