@@ -1,7 +1,7 @@
 steps:
   - bash: |
-      printenv
-    displayName: 'Show all env vars'
+      printf 'Agent OS: %s (%s)\n' "$AGENT_OS" "$AGENT_OSARCHITECTURE"
+    displayName: 'Show agent platform'
     condition: eq(variables['system.debug'], 'true')
 
   - task: NodeTool@0
