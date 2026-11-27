@@ -4,10 +4,10 @@ steps:
     displayName: 'Show all env vars'
     condition: eq(variables['system.debug'], 'true')
 
-  - task: NodeTool@0
+  - task: UseNode@1
     displayName: 'Use Node $(NodeVersion)'
     inputs:
-      versionSpec: $(NodeVersion)
+      version: $(NodeVersion)
 
   - task: Npm@1
     displayName: 'Use NPM $(NpmVersion)'
@@ -18,13 +18,13 @@ steps:
 
   # See the help here on how to cache npm
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/caching/?view=azure-devops#nodejsnpm
-  - task: CacheBeta@0
+  - task: Cache@2
+    displayName: Cache npm
     inputs:
       key: npm | $(Agent.OS) | package-lock.json
       path: $(npm_config_cache)
       restoreKeys: |
         npm | $(Agent.OS)
-      displayName: Cache npm
 
   - task: Npm@1
     displayName: 'npm ci'
